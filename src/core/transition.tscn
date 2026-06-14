@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://f1v0iikcsb57"]
+
+[ext_resource type="Shader" uid="uid://cy7qgn7qtcw6b" path="res://src/shaders/transition.gdshader" id="1_f0i4t"]
+[ext_resource type="Texture2D" uid="uid://c8c70vejvl6dg" path="res://assets/textures/black.png" id="2_px735"]
+[ext_resource type="AnimationLibrary" uid="uid://bo0bwwwsyc2gp" path="res://assets/animations/transition_anims.res" id="3_px735"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
+shader = ExtResource("1_f0i4t")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0.5, 0.5)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(5, 5)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 0.0
+shader_parameter/progress_bias = Vector2(10, 10)
+
+[node name="Transition" type="Control" unique_id=1099122135]
+z_index = 100
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_behavior_recursive = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+
+[node name="Texture" type="TextureRect" parent="." unique_id=903129451]
+material = SubResource("ShaderMaterial_85g3d")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_behavior_recursive = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+texture = ExtResource("2_px735")
+
+[node name="Animation" type="AnimationPlayer" parent="." unique_id=107690757]
+libraries/ = ExtResource("3_px735")
