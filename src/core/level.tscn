@@ -2,46 +2,21 @@
 
 [ext_resource type="Script" uid="uid://bolhu16cbqk8" path="res://src/gameplay/level.gd" id="1_5kcgd"]
 [ext_resource type="Texture2D" uid="uid://57mniub8e1b4" path="res://assets/textures/background.png" id="1_ouqds"]
-[ext_resource type="Texture2D" uid="uid://jxtfk2aweso7" path="res://assets/textures/pan.png" id="2_xsmr6"]
-[ext_resource type="Texture2D" uid="uid://djhc00b88remm" path="res://assets/textures/pan_bottom.png" id="4_5kcgd"]
-[ext_resource type="Script" uid="uid://pxgesblhwdpy" path="res://src/core/spawn_area.gd" id="4_a5w13"]
+[ext_resource type="PackedScene" uid="uid://d3k04bnfvor73" path="res://src/gameplay/pan.tscn" id="3_ouqds"]
 
 [node name="Level" type="Node2D" unique_id=1590050416]
 script = ExtResource("1_5kcgd")
-number_to_spawn = 100
+number_to_spawn = 40
 pop_radius = 100.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=573463167]
 texture = ExtResource("1_ouqds")
 centered = false
 
-[node name="Pan" type="Node2D" parent="." unique_id=85131646]
-position = Vector2(753, 363)
+[node name="Pan2" parent="." unique_id=685319485 instance=ExtResource("3_ouqds")]
+position = Vector2(405, 441)
+scale = Vector2(0.8, 0.8)
 
-[node name="BG" type="Sprite2D" parent="Pan" unique_id=759655655]
-texture = ExtResource("2_xsmr6")
-
-[node name="FG" type="Sprite2D" parent="Pan" unique_id=1256072898]
-z_index = 25
-position = Vector2(-117, 237)
-texture = ExtResource("4_5kcgd")
-
-[node name="RigidBody2D" type="StaticBody2D" parent="Pan" unique_id=27139728]
-
-[node name="BotCollisionPolygon2D" type="CollisionPolygon2D" parent="Pan/RigidBody2D" unique_id=1248976734]
-position = Vector2(-309, -71)
-scale = Vector2(1, 2.1319444)
-polygon = PackedVector2Array(628, 183.94301, -266, 189.10262, -151, 47.374588, -155, 83.49185, -123, 116.794785, -9, 147.28339, 153, 169.32898, 352, 160.88599, 449, 142.12378, 518, 110.69707, 550, 68.95114)
-
-[node name="TopCollisionPolygon2D2" type="CollisionPolygon2D" parent="Pan/RigidBody2D" unique_id=1557161961]
-position = Vector2(70.00003, 293.00006)
-rotation = -3.1398342
-scale = Vector2(1, 4.5451865)
-polygon = PackedVector2Array(638.15265, 144.08186, -214.86896, 141.55171, -331.6214, 47.43119, -170.61462, 48.24894, -143.43, 71.33983, -100.322815, 84.74396, -26.243774, 94.615906, 61.822937, 102.94234, 156.84912, 106.20577, 265.83142, 103.96347, 384.76437, 95.55695, 467.664, 82.984116, 515.56726, 70.86485, 532.46344, 57.877533, 657.5108, 63.769516)
-
-[node name="SpawnArea" type="Node2D" parent="Pan" unique_id=236151690]
-position = Vector2(-112, 37)
-script = ExtResource("4_a5w13")
-radius = 200.0
-
-[connection signal="input_event" from="Pan/RigidBody2D" to="." method="_on_rigid_body_2d_input_event"]
+[node name="Pan" parent="." unique_id=714750070 instance=ExtResource("3_ouqds")]
+position = Vector2(986, 243)
+scale = Vector2(0.8, 0.8)

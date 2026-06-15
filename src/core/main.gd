@@ -27,13 +27,6 @@ func _ready() -> void:
 		goto_scene(start_scene)
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("fullscreen"):
-		var mode := DisplayServer.window_get_mode()
-		var is_window: bool = mode != DisplayServer.WINDOW_MODE_FULLSCREEN
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if is_window else DisplayServer.WINDOW_MODE_WINDOWED)
-
-
 func _process(delta: float) -> void:
 	if _is_scene_queued:
 		_queue_scene_timer -= delta
@@ -42,14 +35,20 @@ func _process(delta: float) -> void:
 				goto_scene(_queued_scene)
 			else:
 				goto_scenep(_queued_scene_path)
-				
+
 			_queued_scene_path = ""
 			_queued_scene = null
 			_is_scene_queued = false
 
-## Scene Management
 
-func goto_scene_queued(scene:PackedScene, delay:float):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("fullscreen"):
+		var mode := DisplayServer.window_get_mode()
+		var is_window: bool = mode != DisplayServer.WINDOW_MODE_FULLSCREEN
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if is_window else DisplayServer.WINDOW_MODE_WINDOWED)
+
+## Scene Management
+func goto_scene_queued(scene: PackedScene, delay: float):
 	_check_existing_scene_change()
 	_is_scene_queued = true
 	_queued_scene = scene
@@ -57,7 +56,7 @@ func goto_scene_queued(scene:PackedScene, delay:float):
 	_queue_scene_timer = delay
 
 
-func goto_scenep_queued(path:String, delay:float):
+func goto_scenep_queued(path: String, delay: float):
 	_check_existing_scene_change()
 	_is_scene_queued = true
 	_queued_scene_path = path
@@ -65,35 +64,35 @@ func goto_scenep_queued(path:String, delay:float):
 	_queue_scene_start_time = delay
 
 
-func goto_scenep(path:String):
+func goto_scenep(path: String):
 	_check_existing_scene_change()
 	_deferred_scene = true
 	_deferred_goto_scenep.call_deferred(path)
 
 
-func goto_scene(scene:PackedScene):
+func goto_scene(scene: PackedScene):
 	_check_existing_scene_change()
 	_deferred_scene = true
 	_deferred_goto_scene.call_deferred(scene)
 
 
-func _transition(anim_to_run:String, callback:Callable = Callable()):
+func _transition(anim_to_run: String, callback: Callable = Callable()):
 	var trans = transition.instantiate()
 	var anim = trans.find_child("Animation") as AnimationPlayer
 	anim.autoplay = anim_to_run
-	anim.animation_finished.connect(func (anim_name):
-		_is_transitioning = false
-		trans.queue_free()
-		if callback:
-			callback.call(anim_name)
+	anim.animation_finished.connect(func(anim_name):
+			_is_transitioning = false
+			trans.queue_free()
+			if callback:
+				callback.call(anim_name)
 	)
 	transition_root.add_child(trans)
 
 
-func _deferred_goto_scenep(path:String):
+func _deferred_goto_scenep(path: String):
 	assert(ResourceLoader.exists(path, "PackedScene"), "Path does not exist")
 	var s = ResourceLoader.load(path, "PackedScene")
-	
+
 	_transition_to_new_scene(s)
 
 
@@ -104,33 +103,32 @@ func _deferred_goto_scene(scene: PackedScene):
 func _free_current_scene():
 	if not current_scene:
 		return
-		
-		
+
 	current_scene.queue_free()
 	current_scene = null
-	
+
 	# wait for the scene to actually be freed
 	await get_tree().process_frame
 
 
-func _transition_to_new_scene(scene:PackedScene):
+func _transition_to_new_scene(scene: PackedScene):
 	_transition("out", func(_anim_name):
 		_free_current_scene()
 		_instantiate_new_scene(scene)
 	)
 
 
-func _instantiate_new_scene(scene:PackedScene):
+func _instantiate_new_scene(scene: PackedScene):
 	current_scene = scene.instantiate()
-	
+
 	_transition("in")
 	world_root.add_child(current_scene)
-	
+
 	_deferred_scene = false
 
 
 func _check_existing_scene_change():
 	if not _queued_scene:
 		assert(_queued_scene_path == "" and _queue_scene_timer <= 0, "A scene is already queued")
-		
+
 	assert(not _deferred_scene, "A scene is already set to be deferred")

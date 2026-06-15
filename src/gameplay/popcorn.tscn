@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://xt1m0woah8io" path="res://assets/textures/shadow.png" id="2_ktqci"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sbbnm"]
+rough = true
 bounce = 0.5
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbbnm"]
@@ -19,10 +20,12 @@ height = 52.0
 collision_layer = 15
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_sbbnm")
+contact_monitor = true
+max_contacts_reported = 1
 linear_damp = 2.0
 script = ExtResource("1_sbbnm")
-on_pop_radius = 100.0
-pop_force = 500.0
+pop_force = 1500.0
+collision_height = 125.0
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1651775173]
 visible = false

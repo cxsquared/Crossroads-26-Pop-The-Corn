@@ -29,7 +29,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gif_recorder/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/gif_recorder/plugin.cfg", "res://addons/godot-neovim/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/simple_gdscript_formatter/plugin.cfg")
 
 [input]
 

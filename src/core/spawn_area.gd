@@ -14,6 +14,7 @@ func _process(_delta: float) -> void:
 	pass
 	
 
+
 func get_point() -> Vector2:
 	var direction = randf_range(0, TAU)
 	var distance = randf_range(0, radius)
