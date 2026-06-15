@@ -26,8 +26,3 @@ func _on_popped(corn_position:Vector2, pops_left:int, iteration:int):
 		for corn in popcorns:
 			if corn_position.distance_to(corn.position) <= pop_radius:
 				corn.pop(pops_left, iteration)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
-	pass

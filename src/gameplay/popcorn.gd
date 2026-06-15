@@ -38,8 +38,8 @@ func _process(_delta: float) -> void:
 	if z > 1:
 		sprite.global_position = global_position + Vector2(0, -max(z, 0))
 		sprite.z_index = min(z, 50)
-		var scale = remap(z, 0, max_height, 1, max_scale)
-		sprite.scale = Vector2(scale, scale)
+		var sprite_scale = remap(z, 0, max_height, 1, max_scale)
+		sprite.scale = Vector2(sprite_scale, sprite_scale)
 		var shadow_scale = remap(z, 0, max_height, 1, .5)
 		$Shadow.scale = Vector2(shadow_scale, shadow_scale)
 

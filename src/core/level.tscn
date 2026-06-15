@@ -8,7 +8,7 @@
 
 [node name="Level" type="Node2D" unique_id=1590050416]
 script = ExtResource("1_5kcgd")
-number_to_spawn = 50
+number_to_spawn = 100
 pop_radius = 100.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=573463167]
