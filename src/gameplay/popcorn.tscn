@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c8ydk1shci3yg"]
+
+[ext_resource type="Texture2D" uid="uid://c2bpvhcaobcg7" path="res://assets/textures/kernel.png" id="1_25ett"]
+[ext_resource type="Script" uid="uid://2f6uovdl8lfe" path="res://src/gameplay/popcorn.gd" id="1_sbbnm"]
+[ext_resource type="Texture2D" uid="uid://xt1m0woah8io" path="res://assets/textures/shadow.png" id="2_ktqci"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sbbnm"]
+bounce = 0.5
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbbnm"]
+radius = 8.0
+height = 44.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sva8g"]
+radius = 14.0
+height = 52.0
+
+[node name="Popcorn" type="RigidBody2D" unique_id=1670371404]
+collision_layer = 15
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_sbbnm")
+linear_damp = 2.0
+script = ExtResource("1_sbbnm")
+on_pop_radius = 100.0
+pop_force = 500.0
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1651775173]
+visible = false
+texture = ExtResource("2_ktqci")
+
+[node name="Unpopped" type="CollisionShape2D" parent="." unique_id=2125213661]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_sbbnm")
+
+[node name="Popped" type="CollisionShape2D" parent="." unique_id=172437758]
+visible = false
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_sva8g")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=554145232]
+texture = ExtResource("1_25ett")

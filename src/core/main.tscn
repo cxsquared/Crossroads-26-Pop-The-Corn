@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://bwmhixliuiiqq" path="res://src/debug/debug_text_overlay.tscn" id="1_avv2o"]
 [ext_resource type="Script" uid="uid://cd6b1svqolqxt" path="res://src/core/main.gd" id="1_ukt3u"]
+[ext_resource type="PackedScene" uid="uid://d2xpgjdrh7iv8" path="res://src/core/level.tscn" id="2_ivtyw"]
 
 [node name="Main" type="Node" unique_id=427628392]
 script = ExtResource("1_ukt3u")
+start_scene = ExtResource("2_ivtyw")
 
 [node name="World" type="Node2D" parent="." unique_id=2011534595]
 unique_name_in_owner = true
 process_mode = 1
-
-[node name="Pan" type="Node2D" parent="World" unique_id=574206747]
 
 [node name="Hud" type="CanvasLayer" parent="." unique_id=1997960299]
 process_mode = 1
@@ -24,6 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Transition" type="CanvasLayer" parent="." unique_id=794119747]
 process_mode = 3
@@ -37,6 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Debug" type="CanvasLayer" parent="." unique_id=934546214]
 process_mode = 3
@@ -50,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="DebugTextOverlay" parent="Debug/DebugRoot" unique_id=1298185809 instance=ExtResource("1_avv2o")]
 layout_mode = 1

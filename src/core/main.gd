@@ -106,7 +106,11 @@ func _free_current_scene():
 		return
 		
 		
-	current_scene.free()
+	current_scene.queue_free()
+	current_scene = null
+	
+	# wait for the scene to actually be freed
+	await get_tree().process_frame
 
 
 func _transition_to_new_scene(scene:PackedScene):
