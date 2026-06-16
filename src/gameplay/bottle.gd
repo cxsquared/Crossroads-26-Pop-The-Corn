@@ -14,7 +14,7 @@ var _firing = false
 var _firing_time: float = 0
 
 @onready var bottle_sprite = $Sprite2D
-@onready var power_bar = $PowerBar
+@onready var power_bar = $Sprite2D/PowerBar
 
 
 # Called when the node enters the scene tree for the first time.
