@@ -11,7 +11,7 @@ position = Vector2(109, -35)
 texture = ExtResource("1_k4s7e")
 
 [node name="FG" type="Sprite2D" parent="." unique_id=1904041410]
-z_index = 25
+z_index = 24
 position = Vector2(-8, 202)
 texture = ExtResource("2_lw8uc")
 
@@ -36,6 +36,7 @@ radius = 200.0
 
 [node name="ResetArea2D" type="Area2D" parent="." unique_id=1586103209]
 position = Vector2(1, 2)
+collision_mask = 2
 
 [node name="BotCollisionPolygon2D" type="CollisionPolygon2D" parent="ResetArea2D" unique_id=348563461]
 position = Vector2(-200.36273, -107.9079)
@@ -49,7 +50,8 @@ scale = Vector2(1, 4.545186)
 polygon = PackedVector2Array(556.73596, 91.9702, 490.86972, 108.716705, 387.97888, 122.39734, 271.0213, 127.72291, 178.03021, 128.85895, 51.011047, 126.487946, -56.071472, 116.18875, -147.16626, 104.34328, -215.31909, 85.22848, -233.46509, 66.974396, -220.60754, 49.14834, -170.61462, 48.24894, -143.43, 71.33983, -100.322815, 84.74396, -26.243774, 94.615906, 61.822937, 102.94234, 156.84912, 106.20577, 265.83142, 103.96347, 384.76437, 95.55695, 467.664, 82.984116, 515.56726, 70.86485, 532.46344, 57.877533, 585.4317, 53.896797, 597.5319, 66.43288, 584.641, 80.07869)
 
 [node name="FullPan" type="Area2D" parent="." unique_id=990407916]
-collision_layer = 2
+collision_layer = 8
+collision_mask = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FullPan" unique_id=510529353]
 polygon = PackedVector2Array(2, 282, 164, 256, 306, 171, 393, 47, 411, -98, 338, -203, 195, -295, 43, -325, -100, -322, -212, -292, -310, -238, -392, -142, -416, -38, -388, 77, -312, 174, -205, 242)

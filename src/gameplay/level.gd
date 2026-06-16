@@ -5,6 +5,7 @@ extends Node2D
 @export var pop_radius: float = 56
 @export var reset_force_delay: float = .2
 @export var max_reset_iterations = 3
+@export var starting_pops = 2
 
 var popcorns: Array[Popcorn] = []
 
@@ -22,13 +23,13 @@ func _ready() -> void:
 			var new_corn = popcorn.instantiate() as Popcorn
 			new_corn.position = point
 			new_corn.name = "Popcorn%d" % i
-			new_corn.popped.connect(_on_popped)
+			new_corn.landed.connect(_on_landed)
 			new_corn.collision_enabled.connect(_on_popcorn_collision_enabled)
 			pan.add_child(new_corn)
 			popcorns.push_back(new_corn)
 
 
-func _on_popped(corn_position: Vector2, pops_left: int, iteration: int):
+func _on_landed(corn_position: Vector2, pops_left: int, iteration: int):
 	if pops_left > 0:
 		for corn in popcorns:
 			if corn_position.distance_to(corn.global_position) <= pop_radius:
@@ -59,7 +60,7 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 	for overlap in overlaps:
 		var collider = overlap.collider as Area2D
 
-		if collider.get_collision_layer_value(2):
+		if collider.get_collision_layer_value(4):
 			# this is just the full pan we use to detect if we left the level
 			continue
 
@@ -72,3 +73,15 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 			check_tween.play()
 
 		break
+
+
+func _on_bottle_fired(oil_drop: OilDrop) -> void:
+	oil_drop.dropped.connect(_on_oil_dropped)
+
+
+func _on_oil_dropped(oil_drop: OilDrop):
+	for corn in popcorns:
+		if oil_drop.global_position.distance_to(corn.global_position) <= pop_radius:
+			corn.pop(oil_drop.global_position, starting_pops, 0)
+			
+	oil_drop.queue_free()

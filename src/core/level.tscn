@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bolhu16cbqk8" path="res://src/gameplay/level.gd" id="1_5kcgd"]
 [ext_resource type="Texture2D" uid="uid://57mniub8e1b4" path="res://assets/textures/background.png" id="1_ouqds"]
 [ext_resource type="PackedScene" uid="uid://d3k04bnfvor73" path="res://src/gameplay/pan.tscn" id="3_ouqds"]
+[ext_resource type="PackedScene" uid="uid://cuslyvboorpxv" path="res://src/gameplay/bottle.tscn" id="4_xsmr6"]
 
 [node name="Level" type="Node2D" unique_id=1590050416]
 script = ExtResource("1_5kcgd")
@@ -14,9 +15,14 @@ texture = ExtResource("1_ouqds")
 centered = false
 
 [node name="Pan2" parent="." unique_id=685319485 instance=ExtResource("3_ouqds")]
-position = Vector2(405, 441)
+position = Vector2(304, 318)
 scale = Vector2(0.8, 0.8)
 
 [node name="Pan" parent="." unique_id=714750070 instance=ExtResource("3_ouqds")]
 position = Vector2(986, 243)
 scale = Vector2(0.8, 0.8)
+
+[node name="Bottle" parent="." unique_id=585983044 instance=ExtResource("4_xsmr6")]
+position = Vector2(669, 757)
+
+[connection signal="fired" from="Bottle" to="." method="_on_bottle_fired"]

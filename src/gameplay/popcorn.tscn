@@ -17,14 +17,15 @@ radius = 14.0
 height = 52.0
 
 [node name="Popcorn" type="RigidBody2D" unique_id=1670371404]
-collision_layer = 15
+collision_layer = 3
+collision_mask = 3
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_sbbnm")
 contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 2.0
 script = ExtResource("1_sbbnm")
-pop_force = 1500.0
+pop_force = 1000.0
 collision_height = 125.0
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1651775173]

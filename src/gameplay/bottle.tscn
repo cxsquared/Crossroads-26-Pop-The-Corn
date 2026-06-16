@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cuslyvboorpxv"]
+
+[ext_resource type="Script" uid="uid://pgr37bl3ilt1" path="res://src/gameplay/bottle.gd" id="1_l118o"]
+[ext_resource type="Texture2D" uid="uid://c4rlf12al7ted" path="res://assets/textures/bottle.png" id="1_rouk7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q4bvp"]
+bg_color = Color(0, 0, 0, 0.3529412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l118o"]
+bg_color = Color(0.0884, 0.68, 0.13769995, 1)
+
+[sub_resource type="Theme" id="Theme_q4bvp"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_q4bvp")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_l118o")
+
+[node name="Bottle" type="Node2D" unique_id=585983044]
+script = ExtResource("1_l118o")
+power_distance = 600.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1230608304]
+position = Vector2(-5, 0)
+texture = ExtResource("1_rouk7")
+
+[node name="PowerBar" type="ProgressBar" parent="." unique_id=1247901767]
+custom_minimum_size = Vector2(20, 100)
+offset_left = -12.0
+offset_top = -236.0
+offset_right = 8.0
+offset_bottom = -136.0
+theme = SubResource("Theme_q4bvp")
+fill_mode = 3
+show_percentage = false

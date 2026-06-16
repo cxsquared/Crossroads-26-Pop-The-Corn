@@ -1,7 +1,7 @@
 class_name Popcorn
 extends RigidBody2D
 
-signal popped(position: Vector2, pops_left: int, iteration: int)
+signal landed(position: Vector2, pops_left: int, iteration: int)
 signal collision_enabled(popcorn: Popcorn)
 
 @export var popped_sprite = preload("res://assets/textures/popcorn.png")
@@ -110,7 +110,7 @@ func land():
 	z = 0
 	sprite.position = Vector2(0, 0)
 	enable_collision()
-	popped.emit(global_position, _number_of_pops_left - 1, _iteration + 1)
+	landed.emit(global_position, _number_of_pops_left - 1, _iteration + 1)
 	_in_air = false
 	sprite.scale = Vector2(1, 1)
 	sprite.z_index = 0
