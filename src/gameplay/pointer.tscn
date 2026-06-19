@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://qef4jcw6sord"]
+
+[ext_resource type="Script" uid="uid://b7evwrrv6tbof" path="res://src/gameplay/pointer.gd" id="1_v51lt"]
+
+[node name="Pointer" type="Node2D" unique_id=350652132]
+script = ExtResource("1_v51lt")
+radius = 31.0

@@ -97,3 +97,23 @@ func _on_oil_dropped(oil_drop: OilDrop):
 			corn.pop(oil_drop.global_position, starting_pops, 0)
 
 	oil_drop.queue_free()
+
+
+func _on_pointer_clicked(pointer: Pointer) -> void:
+	var overlap_query := PhysicsShapeQueryParameters2D.new()
+
+	overlap_query.collide_with_bodies = true
+	overlap_query.transform = pointer.transform
+	overlap_query.shape = pointer.getShape()
+
+	var overlaps = get_world_2d().direct_space_state.intersect_shape(overlap_query)
+
+	for overlap in overlaps:
+		var collider = overlap.collider
+
+		if not collider or collider is not RigidBody2D or not collider.get_collision_layer_value(2) or collider is not Popcorn:
+			# we only care about popcorn aka layer 2
+			continue
+
+		var corn = collider as Popcorn
+		corn.pop(pointer.global_position, starting_pops, 0)

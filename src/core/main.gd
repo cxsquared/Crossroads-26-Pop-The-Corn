@@ -24,7 +24,7 @@ var _deferred_scene = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.hud = hud_root
-	
+
 	if start_scene:
 		goto_scene(start_scene)
 
@@ -48,6 +48,7 @@ func _input(event: InputEvent) -> void:
 		var mode := DisplayServer.window_get_mode()
 		var is_window: bool = mode != DisplayServer.WINDOW_MODE_FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if is_window else DisplayServer.WINDOW_MODE_WINDOWED)
+
 
 ## Scene Management
 func goto_scene_queued(scene: PackedScene, delay: float):

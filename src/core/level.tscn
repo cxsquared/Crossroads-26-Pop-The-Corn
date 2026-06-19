@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://57mniub8e1b4" path="res://assets/textures/background.png" id="1_ouqds"]
 [ext_resource type="PackedScene" uid="uid://bvkvlaav73jvp" path="res://src/gameplay/popper.tscn" id="3_ouqds"]
 [ext_resource type="Script" uid="uid://y6brkvt3g2u0" path="res://src/gameplay/score.gd" id="4_xsmr6"]
+[ext_resource type="PackedScene" uid="uid://qef4jcw6sord" path="res://src/gameplay/pointer.tscn" id="5_5kcgd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ouqds"]
 size = Vector2(1290, 442)
@@ -21,7 +22,7 @@ script = ExtResource("1_5kcgd")
 number_to_spawn = 40
 pop_radius = 100.0
 starting_pops = 1
-floor_z = -25
+floor_z = -100
 
 [node name="Background" type="StaticBody2D" parent="." unique_id=464737975]
 z_index = -50
@@ -91,4 +92,8 @@ text = "0"
 label_settings = SubResource("LabelSettings_xsmr6")
 script = ExtResource("4_xsmr6")
 
+[node name="Pointer" parent="." unique_id=350652132 instance=ExtResource("5_5kcgd")]
+position = Vector2(3.7947388, -40.74707)
+
 [connection signal="score_updated" from="." to="LevelHud/Score" method="_on_level_score_updated"]
+[connection signal="clicked" from="Pointer" to="." method="_on_pointer_clicked"]

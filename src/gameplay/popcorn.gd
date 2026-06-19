@@ -16,6 +16,8 @@ signal hit_floor(popcorn: Popcorn)
 @export var starting_pops: int = 4
 @export var floor_z = -10
 @export var floor_scale = .5
+@export var post_pop_min_speed: float = 100
+@export var can_post_pop = false
 
 var has_popped = false
 var z: float = 0
@@ -40,15 +42,18 @@ func _ready() -> void:
 	unpopped_collider.disabled = false
 	_shadown_diff = $Shadow.position
 
+	var sprite_scale = remap(0, floor_z, max_height, floor_scale, max_scale)
+	sprite.scale = Vector2(sprite_scale, sprite_scale)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if z <= floor_z:
 		return
 
-	if z > 1 or _is_falling:
+	if z >= 1 or _is_falling:
 		var sprite_y = -z
-		var sprite_scale = remap(z, floor_scale, max_height, floor_scale, max_scale)
+		var sprite_scale = remap(z, floor_z, max_height, floor_scale, max_scale)
 
 		sprite.global_position = global_position + Vector2(0, sprite_y)
 		sprite.z_index = clamp(z, -25, 50)
@@ -94,9 +99,11 @@ func _physics_process(delta: float) -> void:
 		enable_collision()
 
 
-func _input_event(viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
-	if not has_popped and event.is_action_pressed("pop"):
-		pop(viewport.get_mouse_position(), starting_pops)
+func _input_event(_viewport: Viewport, _event: InputEvent, _shape_idx: int) -> void:
+	pass
+
+	#if not has_popped and event.is_action_pressed("pop"):
+		#pop(viewport.get_mouse_position(), starting_pops)
 
 
 func enable_collision():
@@ -129,8 +136,10 @@ func land():
 	enable_collision()
 	landed.emit(global_position, _number_of_pops_left - 1, _iteration + 1)
 	_in_air = false
-	sprite.scale = Vector2(1, 1)
+	var sprite_scale = remap(0, floor_z, max_height, floor_scale, max_scale)
+	sprite.scale = Vector2(sprite_scale, sprite_scale)
 	sprite.z_index = 0
+
 	#$Shadow.hide()
 
 
@@ -144,6 +153,18 @@ func get_active_shape() -> Shape2D:
 func fall():
 	_is_falling = true
 	#$Shadow.hide()
+
+
+func post_pop_pop(global_impact_point: Vector2, hitter_speed: float):
+	if not has_popped or _in_air or z < 0 or linear_velocity.abs().length() > 5:
+		return
+
+	z_velocity += z_impulse * remap(hitter_speed, post_pop_min_speed, post_pop_min_speed * 2, .25, .8)
+	z = 2
+	var direction = global_impact_point.direction_to(global_position) # random = randf_range(0, TAU)
+	var impulse = direction * hitter_speed * .8
+	apply_impulse(impulse)
+	_in_air = true
 
 
 func pop(global_impact_point: Vector2, number_of_pops_left: int, iteration: int = 0, recovery_pop: bool = false):
@@ -172,3 +193,16 @@ func pop(global_impact_point: Vector2, number_of_pops_left: int, iteration: int 
 	_iteration = iteration
 	_number_of_pops_left = number_of_pops_left
 	_in_air = true
+
+
+func _on_body_exited(body: Node) -> void:
+	var speed = linear_velocity.abs().length()
+	if not can_post_pop or speed < post_pop_min_speed:
+		return
+
+	if body is Popcorn:
+		body.post_pop_pop(global_position, linear_velocity.abs().length())
+
+
+func _on_spawn_delay_post_pop_timeout() -> void:
+	can_post_pop = true
