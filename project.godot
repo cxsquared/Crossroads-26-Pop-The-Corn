@@ -55,6 +55,8 @@ fire={
 2d_physics/layer_2="Popcorn"
 2d_physics/layer_3="Oil"
 2d_physics/layer_4="Void"
+2d_physics/layer_5="Level Boundry"
+2d_physics/layer_6="PoppedCorn"
 
 [physics]
 

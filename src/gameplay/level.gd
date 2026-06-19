@@ -3,28 +3,35 @@ extends Node2D
 signal score_updated(new_score: int)
 
 @export var popcorn: PackedScene = preload("res://src/gameplay/popcorn.tscn")
+
+@export_category("Each Round")
 @export var number_to_spawn = 10
-@export var pop_radius: float = 56
-@export var reset_force_delay: float = .2
-@export var max_reset_iterations = 3
-@export var starting_pops = 2
-@export var floor_z = -10
 @export var score: int = 0
 @export var target = 15
-@export var pops_left = 5
+@export var starting_pop_attempts = 5
+
+@export_category("Collision Quirks")
+@export var reset_force_delay: float = .2
+@export var max_reset_iterations = 3
+@export var floor_z = -10
+
+@export_category("Probably not needed")
+@export var pop_radius: float = 56
 
 var popcorns: Array[Popcorn] = []
+var player_pops_left = 0
 
-@onready var spawnable_area = $Pan/SpawnArea as SpawnArea
+@onready var spawnable_area = $Popper/SpawnArea as SpawnArea
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$LevelHud.reparent(Global.hud)
+	player_pops_left = starting_pop_attempts
 
-	var pans = find_children("Pan*")
+	var poppers = find_children("Popper*")
 
-	for pan in pans:
+	for popper in poppers:
 		for i in range(number_to_spawn):
 			var point = spawnable_area.get_point()
 
@@ -32,22 +39,33 @@ func _ready() -> void:
 			new_corn.position = point
 			new_corn.name = "Popcorn%d" % i
 			new_corn.landed.connect(_on_landed)
-			new_corn.starting_pops = starting_pops
 			new_corn.floor_z = self.floor_z
 			new_corn.collision_enabled.connect(_on_popcorn_collision_enabled)
 			new_corn.hit_floor.connect(func(_corn: Popcorn):
 					score += 1
 					score_updated.emit(score)
 			)
-			pan.add_child(new_corn)
+
+			popper.add_child(new_corn)
 			popcorns.push_back(new_corn)
+
+			if [true, false, false].pick_random():
+				var flavors: Array[Flavor]
+				if [true, false, false, false, false].pick_random():
+					flavors.push_back(ExtraSpawn.new())
+					flavors.push_back(ChainReaction.new())
+				else:
+					flavors.push_back([ExtraSpawn.new(), ChainReaction.new()].pick_random())
+
+				for flavor in flavors:
+					new_corn.add_flavor(flavor)
 
 
 func _on_landed(corn_position: Vector2, pops_left: int, iteration: int):
 	if pops_left > 0:
 		for corn in popcorns:
 			if corn_position.distance_to(corn.global_position) <= pop_radius:
-				corn.pop(corn_position, pops_left, iteration)
+				corn.pop(corn_position, pops_left - 1, iteration)
 
 
 func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
@@ -89,20 +107,8 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 		break
 
 
-func _on_bottle_fired(oil_drop: OilDrop) -> void:
-	oil_drop.dropped.connect(_on_oil_dropped)
-
-
-func _on_oil_dropped(oil_drop: OilDrop):
-	for corn in popcorns:
-		if oil_drop.global_position.distance_to(corn.global_position) <= pop_radius:
-			corn.pop(oil_drop.global_position, starting_pops, 0)
-
-	oil_drop.queue_free()
-
-
 func _on_pointer_clicked(pointer: Pointer) -> void:
-	if pops_left <= 0:
+	if player_pops_left <= 0:
 		return
 
 	var overlap_query := PhysicsShapeQueryParameters2D.new()
@@ -114,7 +120,6 @@ func _on_pointer_clicked(pointer: Pointer) -> void:
 	var overlaps = get_world_2d().direct_space_state.intersect_shape(overlap_query)
 	var hit_corn = false
 
-
 	for overlap in overlaps:
 		var collider = overlap.collider
 
@@ -123,8 +128,8 @@ func _on_pointer_clicked(pointer: Pointer) -> void:
 			continue
 
 		var corn = collider as Popcorn
-		corn.pop(pointer.global_position, starting_pops, 0)
+		corn.pop(pointer.global_position)
 		hit_corn = true
-		
+
 	if hit_corn:
-		pops_left -= 1
+		player_pops_left -= 1

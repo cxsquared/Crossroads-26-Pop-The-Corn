@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_bc3yi"]
 radius = 220.0091
 
-[node name="Pan" type="Node2D" unique_id=685319485]
+[node name="Popper" type="Node2D" unique_id=685319485]
 
 [node name="BG" type="Sprite2D" parent="." unique_id=1416262559]
 texture = ExtResource("1_w2pp6")

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c5mogwd5ov64p"]
+
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="1_uk1tx"]
+
+[node name="FlavorDots" type="Sprite2D" unique_id=1220518978]
+texture = ExtResource("1_uk1tx")

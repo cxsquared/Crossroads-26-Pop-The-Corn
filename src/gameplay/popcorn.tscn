@@ -24,10 +24,6 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 2.0
 script = ExtResource("1_sbbnm")
-pop_force = 1500.0
-collision_height = 125.0
-starting_pops = 0
-floor_scale = 0.8
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1651775173]
 visible = false
@@ -47,6 +43,7 @@ disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=554145232]
 top_level = true
+clip_children = 2
 texture = ExtResource("1_25ett")
 
 [node name="SpawnDelayPostPop" type="Timer" parent="." unique_id=252195706]

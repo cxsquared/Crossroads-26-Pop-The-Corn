@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b5lip6lw8cir7"]
+
+[ext_resource type="Texture2D" uid="uid://hcgf18ba1o65" path="res://assets/textures/oil_drop.png" id="1_6tspp"]
+[ext_resource type="Script" uid="uid://cs1kqru1p7st0" path="res://src/gameplay/old_ideas/oil_drop.gd" id="1_yupxj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yupxj"]
+radius = 32.38827
+
+[node name="OilDrop" type="Node2D" unique_id=1385876438]
+z_index = 25
+script = ExtResource("1_yupxj")
+distance_per_second = 750
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2027837631]
+texture = ExtResource("1_6tspp")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1524424563]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1045685337]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_yupxj")
