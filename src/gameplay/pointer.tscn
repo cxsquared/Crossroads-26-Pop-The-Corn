@@ -5,3 +5,7 @@
 [node name="Pointer" type="Node2D" unique_id=350652132]
 script = ExtResource("1_v51lt")
 radius = 31.0
+
+[node name="ClickCooldown" type="Timer" parent="." unique_id=1689475514]
+
+[connection signal="timeout" from="ClickCooldown" to="." method="_on_click_cooldown_timeout"]

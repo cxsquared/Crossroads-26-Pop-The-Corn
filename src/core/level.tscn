@@ -19,13 +19,15 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D" unique_id=1590050416]
 script = ExtResource("1_5kcgd")
-number_to_spawn = 40
+number_to_spawn = 50
 pop_radius = 100.0
 starting_pops = 1
 floor_z = -100
+target = 10
 
 [node name="Background" type="StaticBody2D" parent="." unique_id=464737975]
 z_index = -50
+collision_layer = 17
 
 [node name="Background" type="Sprite2D" parent="Background" unique_id=573463167]
 texture = ExtResource("1_ouqds")

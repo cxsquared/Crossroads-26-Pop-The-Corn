@@ -28,6 +28,8 @@ func _process(_delta: float) -> void:
 	global_position = get_viewport().get_mouse_position()
 	if can_click and Input.is_action_pressed("pop"):
 		clicked.emit(self)
+		can_click = false
+		$ClickCooldown.start()
 
 	queue_redraw()
 
@@ -39,3 +41,7 @@ func getShape() -> Shape2D:
 func _draw() -> void:
 	if Engine.is_editor_hint() or Global.debug:
 		draw_circle(Vector2.ZERO, radius, Color.PINK, false, 5)
+
+
+func _on_click_cooldown_timeout() -> void:
+	can_click = true

@@ -152,6 +152,7 @@ func get_active_shape() -> Shape2D:
 
 func fall():
 	_is_falling = true
+	set_collision_mask_value(1, false)
 	#$Shadow.hide()
 
 

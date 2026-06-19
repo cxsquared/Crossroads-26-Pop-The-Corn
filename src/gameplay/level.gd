@@ -10,6 +10,8 @@ signal score_updated(new_score: int)
 @export var starting_pops = 2
 @export var floor_z = -10
 @export var score: int = 0
+@export var target = 15
+@export var pops_left = 5
 
 var popcorns: Array[Popcorn] = []
 
@@ -100,6 +102,9 @@ func _on_oil_dropped(oil_drop: OilDrop):
 
 
 func _on_pointer_clicked(pointer: Pointer) -> void:
+	if pops_left <= 0:
+		return
+
 	var overlap_query := PhysicsShapeQueryParameters2D.new()
 
 	overlap_query.collide_with_bodies = true
@@ -107,6 +112,8 @@ func _on_pointer_clicked(pointer: Pointer) -> void:
 	overlap_query.shape = pointer.getShape()
 
 	var overlaps = get_world_2d().direct_space_state.intersect_shape(overlap_query)
+	var hit_corn = false
+
 
 	for overlap in overlaps:
 		var collider = overlap.collider
@@ -117,3 +124,7 @@ func _on_pointer_clicked(pointer: Pointer) -> void:
 
 		var corn = collider as Popcorn
 		corn.pop(pointer.global_position, starting_pops, 0)
+		hit_corn = true
+		
+	if hit_corn:
+		pops_left -= 1
