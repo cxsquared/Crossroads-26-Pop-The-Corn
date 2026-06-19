@@ -21,7 +21,7 @@ outline_color = Color(0, 0, 0, 1)
 script = ExtResource("1_5kcgd")
 number_to_spawn = 50
 target = 10
-floor_z = -100
+floor_z = -50
 pop_radius = 100.0
 
 [node name="Background" type="StaticBody2D" parent="." unique_id=464737975]
@@ -33,7 +33,7 @@ texture = ExtResource("1_ouqds")
 centered = false
 
 [node name="Top" type="CollisionShape2D" parent="Background" unique_id=2010670698]
-position = Vector2(643, -123)
+position = Vector2(642, -136)
 shape = SubResource("RectangleShape2D_ouqds")
 
 [node name="Bottom" type="CollisionShape2D" parent="Background" unique_id=570870690]
@@ -41,34 +41,15 @@ position = Vector2(635, 846)
 shape = SubResource("RectangleShape2D_ouqds")
 
 [node name="Right" type="CollisionShape2D" parent="Background" unique_id=1638159245]
-position = Vector2(1450.5, 358)
+position = Vector2(1457, 361)
 shape = SubResource("RectangleShape2D_xsmr6")
 
 [node name="Left" type="CollisionShape2D" parent="Background" unique_id=724619291]
-position = Vector2(-166, 372)
-shape = SubResource("RectangleShape2D_xsmr6")
-
-[node name="Reset" type="Area2D" parent="Background" unique_id=1158211334]
-collision_mask = 2
-
-[node name="Top" type="CollisionShape2D" parent="Background/Reset" unique_id=347325266]
-position = Vector2(643, -123)
-shape = SubResource("RectangleShape2D_ouqds")
-
-[node name="Bottom" type="CollisionShape2D" parent="Background/Reset" unique_id=1038448862]
-position = Vector2(635, 846)
-shape = SubResource("RectangleShape2D_ouqds")
-
-[node name="Right" type="CollisionShape2D" parent="Background/Reset" unique_id=1885073934]
-position = Vector2(1450.5, 358)
-shape = SubResource("RectangleShape2D_xsmr6")
-
-[node name="Left" type="CollisionShape2D" parent="Background/Reset" unique_id=1424418028]
-position = Vector2(-166, 372)
+position = Vector2(-170, 368)
 shape = SubResource("RectangleShape2D_xsmr6")
 
 [node name="Popper" parent="." unique_id=685319485 instance=ExtResource("3_ouqds")]
-position = Vector2(681, 357)
+position = Vector2(677, 367)
 scale = Vector2(0.9, 0.9)
 
 [node name="Pointer" parent="." unique_id=350652132 instance=ExtResource("5_5kcgd")]

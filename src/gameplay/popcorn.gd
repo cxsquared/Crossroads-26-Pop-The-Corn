@@ -59,6 +59,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if z <= floor_z:
+		if not get_viewport_rect().has_point(global_position):
+			global_position.y = -64
+			z = floor_z/2
 		return
 
 	if z >= 1 or _is_falling:
@@ -181,7 +184,7 @@ func add_flavor(flavor: Flavor):
 	if flavor.decoration:
 		var flavor_sprite = flavor.decoration.instantiate() as Sprite2D
 		flavor_sprite.modulate = flavor.color_override
-		flavor_sprite.rotate(randf_range(0, TAU))
+		flavor_sprite.rotate(randf_range(-TAU, TAU))
 
 		sprite.add_child(flavor_sprite)
 

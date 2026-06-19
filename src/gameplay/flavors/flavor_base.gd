@@ -38,6 +38,10 @@ func _on_popped(_popcorn: Popcorn, _global_impact_point: Vector2, _number_of_pop
 	pass
 
 
+func _on_any_pop(_popcorn: Popcorn):
+	pass
+
+
 func _on_body_exit(_popcorn: Popcorn):
 	pass
 

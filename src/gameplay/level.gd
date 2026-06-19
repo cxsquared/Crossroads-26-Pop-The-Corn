@@ -1,8 +1,10 @@
+class_name Level
 extends Node2D
 
 signal score_updated(new_score: int)
+signal on_any_pop(popcorn: Popcorn)
 
-@export var popcorn: PackedScene = preload("res://src/gameplay/popcorn.tscn")
+@export var popcorn_scene: PackedScene = preload("res://src/gameplay/popcorn.tscn")
 
 @export_category("Each Round")
 @export var number_to_spawn = 10
@@ -26,6 +28,7 @@ var player_pops_left = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.level = self
 	$LevelHud.reparent(Global.hud)
 	player_pops_left = starting_pop_attempts
 
@@ -35,10 +38,11 @@ func _ready() -> void:
 		for i in range(number_to_spawn):
 			var point = spawnable_area.get_point()
 
-			var new_corn = popcorn.instantiate() as Popcorn
+			var new_corn = popcorn_scene.instantiate() as Popcorn
 			new_corn.position = point
 			new_corn.name = "Popcorn%d" % i
 			new_corn.landed.connect(_on_landed)
+			new_corn.popped.connect(_on_popped)
 			new_corn.floor_z = self.floor_z
 			new_corn.collision_enabled.connect(_on_popcorn_collision_enabled)
 			new_corn.hit_floor.connect(func(_corn: Popcorn):
@@ -49,16 +53,39 @@ func _ready() -> void:
 			popper.add_child(new_corn)
 			popcorns.push_back(new_corn)
 
-			if [true, false, false].pick_random():
-				var flavors: Array[Flavor]
-				if [true, false, false, false, false].pick_random():
-					flavors.push_back(ExtraSpawn.new())
-					flavors.push_back(ChainReaction.new())
-				else:
-					flavors.push_back([ExtraSpawn.new(), ChainReaction.new()].pick_random())
+			_add_test_flavor(new_corn)
 
-				for flavor in flavors:
-					new_corn.add_flavor(flavor)
+
+func _add_test_flavor(new_popcorn: Popcorn):
+	if Global.rand_bool(3):
+		var flavors: Array[Flavor]
+		if Global.rand_bool(5):
+			if Global.rand_bool(2):
+				flavors.push_back(ExtraSpawn.new())
+			if Global.rand_bool(2):
+				flavors.push_back(ChainReaction.new())
+			if Global.rand_bool(2):
+				flavors.push_back(NearbyPop.new(func():
+						return popcorns
+				))
+			if Global.rand_bool(2):
+				var pop_after_pop = PopAfterPops.new()
+				on_any_pop.connect(pop_after_pop._on_any_pop)
+				flavors.push_back(pop_after_pop)
+		else:
+			var new_flavor = [
+				PopAfterPops.new(),
+				ExtraSpawn.new(),
+				ChainReaction.new(),
+				NearbyPop.new(func(): return popcorns)].pick_random()
+
+			if new_flavor is PopAfterPops:
+				on_any_pop.connect(new_flavor._on_any_pop)
+
+			flavors.push_back(new_flavor)
+
+		for flavor in flavors:
+			new_popcorn.add_flavor(flavor)
 
 
 func _on_landed(corn_position: Vector2, pops_left: int, iteration: int):
@@ -133,3 +160,7 @@ func _on_pointer_clicked(pointer: Pointer) -> void:
 
 	if hit_corn:
 		player_pops_left -= 1
+
+
+func _on_popped(popcorn: Popcorn, _global_impact_point: Vector2, _number_of_pops_left: int, _iteration: int):
+	on_any_pop.emit(popcorn)
