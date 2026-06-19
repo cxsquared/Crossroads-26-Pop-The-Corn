@@ -3,6 +3,7 @@ extends RigidBody2D
 
 signal landed(position: Vector2, pops_left: int, iteration: int)
 signal collision_enabled(popcorn: Popcorn)
+signal hit_floor(popcorn: Popcorn)
 
 @export var popped_sprite = preload("res://assets/textures/popcorn.png")
 @export var pop_force: float = 100
@@ -13,6 +14,8 @@ signal collision_enabled(popcorn: Popcorn)
 @export var max_scale: float = 2.0
 @export var max_height: float = 300.0
 @export var starting_pops: int = 4
+@export var floor_z = -10
+@export var floor_scale = .5
 
 var has_popped = false
 var z: float = 0
@@ -24,6 +27,7 @@ var _in_air = false
 var _number_of_pops_left: int = 0
 var _iteration: int = 0
 var _collision_enabled = true
+var _shadown_diff: Vector2 = Vector2.ZERO
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var popped_collider = $Popped
@@ -34,33 +38,46 @@ var _collision_enabled = true
 func _ready() -> void:
 	popped_collider.disabled = true
 	unpopped_collider.disabled = false
+	_shadown_diff = $Shadow.position
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if z <= floor_z:
+		return
+
 	if z > 1 or _is_falling:
-		var sprite_y = -max(z, 0)
-		var sprite_scale = remap(z, 0, max_height, 1, max_scale)
-		if _is_falling and z <= 0:
-			sprite_y = -z
-			sprite_scale = remap(z, -max_height, max_height, 0, max_scale)
-			if sprite_scale <= 0:
-				queue_free()
+		var sprite_y = -z
+		var sprite_scale = remap(z, floor_scale, max_height, floor_scale, max_scale)
 
 		sprite.global_position = global_position + Vector2(0, sprite_y)
-		sprite.z_index = min(z, 50)
+		sprite.z_index = clamp(z, -25, 50)
 		sprite.scale = Vector2(sprite_scale, sprite_scale)
 
-		var shadow_scale = remap(z, 0, max_height, 1, .5)
-		$Shadow.scale = Vector2(shadow_scale, shadow_scale)
+		# var shadow_scale = remap(z, 0, max_height, 1, .5)
+		# $Shadow.scale = Vector2(shadow_scale, shadow_scale)
 
 
 func _physics_process(delta: float) -> void:
+	sprite.global_position = global_position
+	sprite.rotation = rotation
+
+	if z <= floor_z:
+		return
+
+	if $Shadow.visible:
+		pass
+		#$Shadow.global_position = global_position + _shadown_diff
+		#$Shadow.rotation = -rotation
+
 	if _is_falling:
 		z -= gravity * delta
 		# check if we are off the level
-		if z < -get_viewport_rect().size.y + 20:
-			queue_free()
+		if z < floor_z:
+			z = floor_z
+			sprite.scale = Vector2(floor_scale, floor_scale)
+			_is_falling = false
+			hit_floor.emit(self)
 
 		return
 
@@ -114,7 +131,7 @@ func land():
 	_in_air = false
 	sprite.scale = Vector2(1, 1)
 	sprite.z_index = 0
-	$Shadow.hide()
+	#$Shadow.hide()
 
 
 func get_active_shape() -> Shape2D:
@@ -125,9 +142,8 @@ func get_active_shape() -> Shape2D:
 
 
 func fall():
-	disable_collision()
 	_is_falling = true
-	$Shadow.hide()
+	#$Shadow.hide()
 
 
 func pop(global_impact_point: Vector2, number_of_pops_left: int, iteration: int = 0, recovery_pop: bool = false):
@@ -143,7 +159,7 @@ func pop(global_impact_point: Vector2, number_of_pops_left: int, iteration: int 
 	has_popped = true
 	z_velocity += adjusted_z_impulse * remap(iteration, 0, starting_pops, 1, .2)
 	z = 1
-	$Shadow.show()
+	#$Shadow.show()
 
 	sprite.texture = popped_sprite
 	popped_collider.disabled = false

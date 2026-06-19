@@ -23,6 +23,8 @@ var _deferred_scene = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.hud = hud_root
+	
 	if start_scene:
 		goto_scene(start_scene)
 

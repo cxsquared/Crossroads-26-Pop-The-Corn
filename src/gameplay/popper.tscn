@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bvkvlaav73jvp"]
+
+[ext_resource type="Texture2D" uid="uid://dr1mucrqf0dpt" path="res://assets/textures/popper.png" id="1_w2pp6"]
+[ext_resource type="Script" uid="uid://pxgesblhwdpy" path="res://src/core/spawn_area.gd" id="3_av01g"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bc3yi"]
+radius = 220.0091
+
+[node name="Pan" type="Node2D" unique_id=685319485]
+
+[node name="BG" type="Sprite2D" parent="." unique_id=1416262559]
+texture = ExtResource("1_w2pp6")
+
+[node name="Collision" type="StaticBody2D" parent="." unique_id=1350484986]
+position = Vector2(1, 2)
+
+[node name="BotCollisionPolygon2D" type="CollisionPolygon2D" parent="Collision" unique_id=917843084]
+position = Vector2(-200.36273, -107.9079)
+scale = Vector2(1, 2.1319444)
+polygon = PackedVector2Array(424.36273, 82.9796, 400.36273, 111.59198, 330.36273, 143.9568, 264.36273, 156.62129, 199.36273, 159.90468, 131.36273, 157.5594, 42.362732, 133.63759, -3.637268, 106.43237, -29.637268, 80.63432, -37.637268, 49.207615, -5.637268, 48.73856, -2.637268, 72.660385, 18.362732, 96.58221, 63.362732, 121.911194, 136.36273, 141.14247, 200.36273, 145.83302, 258.36273, 139.26625, 307.36273, 130.3542, 359.36273, 106.90143, 391.36273, 79.22716, 398.36273, 50.145725, 437.36273, 49.207615)
+
+[node name="TopCollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision" unique_id=270376014]
+position = Vector2(178.63731, 256.09216)
+rotation = -3.1398342
+scale = Vector2(1, 4.545186)
+polygon = PackedVector2Array(380.32977, 86.558395, 353.3808, 92.94921, 314.43536, 99.7847, 254.4935, 107.06833, 179.51646, 109.957504, 87.48142, 105.59285, 34.43579, 99.89302, -9.659103, 88.02936, -44.761047, 75.282166, -57.861267, 62.74647, -58.914032, 56.14648, -20.910553, 56.571804, -15.820892, 67.79051, -0.75408936, 76.145195, 25.325012, 86.035706, 76.398796, 95.25651, 127.43741, 100.07706, 180.44789, 101.376625, 239.43549, 99.813705, 297.38968, 94.07094, 339.31577, 84.814156, 364.25244, 76.88403, 380.16974, 66.53725, 385.09412, 57.074764, 418.09058, 56.62197, 413.175, 67.18452, 403.2471, 76.2089)
+
+[node name="SpawnArea" type="Node2D" parent="." unique_id=1884019842]
+position = Vector2(-3, 2)
+script = ExtResource("3_av01g")
+radius = 180.0
+
+[node name="ResetArea2D" type="Area2D" parent="." unique_id=1586103209]
+position = Vector2(1, 2)
+collision_mask = 2
+
+[node name="BotCollisionPolygon2D" type="CollisionPolygon2D" parent="ResetArea2D" unique_id=779589596]
+position = Vector2(-200.36273, -107.9079)
+scale = Vector2(1, 2.1319444)
+polygon = PackedVector2Array(424.36273, 82.9796, 400.36273, 111.59198, 330.36273, 143.9568, 264.36273, 156.62129, 199.36273, 159.90468, 131.36273, 157.5594, 42.362732, 133.63759, -3.637268, 106.43237, -29.637268, 80.63432, -37.637268, 49.207615, -5.637268, 48.73856, -2.637268, 72.660385, 18.362732, 96.58221, 63.362732, 121.911194, 136.36273, 141.14247, 200.36273, 145.83302, 258.36273, 139.26625, 307.36273, 130.3542, 359.36273, 106.90143, 391.36273, 79.22716, 398.36273, 50.145725, 437.36273, 49.207615)
+
+[node name="TopCollisionPolygon2D2" type="CollisionPolygon2D" parent="ResetArea2D" unique_id=2126135267]
+position = Vector2(178.63731, 256.09216)
+rotation = -3.1398342
+scale = Vector2(1, 4.545186)
+polygon = PackedVector2Array(380.32977, 86.558395, 353.3808, 92.94921, 314.43536, 99.7847, 254.4935, 107.06833, 179.51646, 109.957504, 87.48142, 105.59285, 34.43579, 99.89302, -9.659103, 88.02936, -44.761047, 75.282166, -57.861267, 62.74647, -58.914032, 56.14648, -20.910553, 56.571804, -15.820892, 67.79051, -0.75408936, 76.145195, 25.325012, 86.035706, 76.398796, 95.25651, 127.43741, 100.07706, 180.44789, 101.376625, 239.43549, 99.813705, 297.38968, 94.07094, 339.31577, 84.814156, 364.25244, 76.88403, 380.16974, 66.53725, 385.09412, 57.074764, 418.09058, 56.62197, 413.175, 67.18452, 403.2471, 76.2089)
+
+[node name="FullPan" type="Area2D" parent="." unique_id=990407916]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FullPan" unique_id=1527511938]
+shape = SubResource("CircleShape2D_bc3yi")
