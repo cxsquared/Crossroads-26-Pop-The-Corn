@@ -19,7 +19,7 @@ mono_crash.*.json
 
 # Krita backup files
 *.*~
-*.kra_autosave.kra
+*kra-autosave.kra
 
 # For PCBs designed using KiCad: https://www.kicad.org/
 # Format documentation: https://kicad.org/help/file-formats/
