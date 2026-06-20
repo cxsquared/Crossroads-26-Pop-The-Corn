@@ -2,8 +2,14 @@ extends Node
 
 @export var debug = true
 
+var main: Main
 var hud: Control
 var level: Level
+var current_run: RunState = null
+
+
+func new_run():
+	current_run = RunState.new()
 
 
 func rand_bool(d: int = 2):

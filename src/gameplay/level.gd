@@ -7,7 +7,8 @@ signal on_any_pop(popcorn: Popcorn)
 @export var popcorn_scene: PackedScene = preload("res://src/gameplay/popcorn.tscn")
 
 @export_category("Each Round")
-@export var number_to_spawn = 10
+@export var base_wave_spawn = 10
+@export var initial_spawn_number = 50
 @export var score: int = 0
 @export var target = 15
 @export var starting_pop_attempts = 5
@@ -32,15 +33,31 @@ func _ready() -> void:
 	$LevelHud.reparent(Global.hud)
 	player_pops_left = starting_pop_attempts
 
+	spawn_corn(initial_spawn_number)
+
+
+func reset_pops():
+	var number_to_spawn = (Global.current_run.wave - 1) * base_wave_spawn
+	score = 0
+	score_updated.emit(score)
+	target = Global.current_run.get_current_wave_target()
+	player_pops_left = starting_pop_attempts
+
+	spawn_corn(number_to_spawn, true)
+
+
+func spawn_corn(amount: int, add_test_flavors = false):
 	var poppers = find_children("Popper*")
 
+	var existing_corn_num = popcorns.size()
+
 	for popper in poppers:
-		for i in range(number_to_spawn):
+		for i in range(amount):
 			var point = spawnable_area.get_point()
 
 			var new_corn = popcorn_scene.instantiate() as Popcorn
 			new_corn.position = point
-			new_corn.name = "Popcorn%d" % i
+			new_corn.name = "Popcorn%d" % [existing_corn_num + i]
 			new_corn.landed.connect(_on_landed)
 			new_corn.popped.connect(_on_popped)
 			new_corn.floor_z = self.floor_z
@@ -53,7 +70,8 @@ func _ready() -> void:
 			popper.add_child(new_corn)
 			popcorns.push_back(new_corn)
 
-			_add_test_flavor(new_corn)
+			if add_test_flavors:
+				_add_test_flavor(new_corn)
 
 
 func _add_test_flavor(new_popcorn: Popcorn):
@@ -136,6 +154,7 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 
 func _on_pointer_clicked(pointer: Pointer) -> void:
 	if player_pops_left <= 0:
+		Global.main.goto_scenep("res://src/gameplay/lobby.tscn", true)
 		return
 
 	var overlap_query := PhysicsShapeQueryParameters2D.new()
