@@ -5,11 +5,12 @@ extends Node2D
 signal clicked(pointer: Pointer)
 
 @export var can_click = true
-
+@export var sprite_width = 400
 @export var radius: float = 30:
 	set(new_radius):
 		radius = new_radius
 		_shape.radius = radius
+		update_sprite_scale()
 		queue_redraw()
 
 var _shape: Shape2D = CircleShape2D.new()
@@ -17,7 +18,9 @@ var _shape: Shape2D = CircleShape2D.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	if not Engine.is_editor_hint():
+		$AnimatedSprite2D.play("default")
+		update_sprite_scale()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,6 +35,12 @@ func _process(_delta: float) -> void:
 		$ClickCooldown.start()
 
 	queue_redraw()
+
+
+func update_sprite_scale():
+	if $AnimatedSprite2D:
+		var sprite_scale = radius / sprite_width
+		$AnimatedSprite2D.scale = Vector2(sprite_scale, sprite_scale)
 
 
 func getShape() -> Shape2D:

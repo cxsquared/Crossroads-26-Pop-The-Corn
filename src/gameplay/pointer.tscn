@@ -1,11 +1,65 @@
 [gd_scene format=3 uid="uid://qef4jcw6sord"]
 
 [ext_resource type="Script" uid="uid://b7evwrrv6tbof" path="res://src/gameplay/pointer.gd" id="1_v51lt"]
+[ext_resource type="Texture2D" uid="uid://d4gmdgrn4kply" path="res://assets/textures/oil_pointer/oil_pointer0000.png" id="2_i7ev0"]
+[ext_resource type="Texture2D" uid="uid://dqrnsv70ut4nm" path="res://assets/textures/oil_pointer/oil_pointer0002.png" id="3_bi57l"]
+[ext_resource type="Texture2D" uid="uid://cnv5pxvukw5mh" path="res://assets/textures/oil_pointer/oil_pointer0003.png" id="4_cm3io"]
+[ext_resource type="Texture2D" uid="uid://ctksbtypfiuvo" path="res://assets/textures/oil_pointer/oil_pointer0004.png" id="5_nmf4r"]
+[ext_resource type="Texture2D" uid="uid://ds3rr4ahl2dh" path="res://assets/textures/oil_pointer/oil_pointer0005.png" id="6_wpv76"]
+[ext_resource type="Texture2D" uid="uid://bthfd1nhdtb0t" path="res://assets/textures/oil_pointer/oil_pointer0001.png" id="7_igbgf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_03jr6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_i7ev0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bi57l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cm3io")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nmf4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_nmf4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_i7ev0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wpv76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_igbgf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wpv76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cm3io")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bi57l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Pointer" type="Node2D" unique_id=350652132]
 script = ExtResource("1_v51lt")
-radius = 31.0
+sprite_width = 180
+radius = 40.0
 
 [node name="ClickCooldown" type="Timer" parent="." unique_id=1689475514]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=839788334]
+modulate = Color(1, 1, 1, 0.69411767)
+scale = Vector2(0.22222222, 0.22222222)
+sprite_frames = SubResource("SpriteFrames_03jr6")
+frame_progress = 0.76370925
 
 [connection signal="timeout" from="ClickCooldown" to="." method="_on_click_cooldown_timeout"]

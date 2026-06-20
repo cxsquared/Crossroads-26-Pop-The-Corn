@@ -1,6 +1,6 @@
 extends Node
 
-@export var debug = true
+@export var debug = false
 
 var main: Main
 var hud: Control

@@ -61,8 +61,7 @@ func _process(_delta: float) -> void:
 	if z <= floor_z:
 		if not get_viewport_rect().has_point(global_position):
 			global_position.y = -64
-			z = floor_z/2
-		return
+			z = floor_z * .5
 
 	if z >= 1 or _is_falling:
 		var sprite_y = -z
@@ -190,14 +189,14 @@ func add_flavor(flavor: Flavor):
 
 
 func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int = 0, recovery_pop: bool = false):
-	if has_popped and not recovery_pop:
-		return
-
 	var adjusted_z_impulse = z_impulse
 	var adjusted_pop_force = pop_force
 	if recovery_pop:
-		adjusted_z_impulse = adjusted_z_impulse * .5
+		adjusted_z_impulse = adjusted_z_impulse * .3
 		pop_force = pop_force * .5
+	elif has_popped:
+		adjusted_z_impulse = adjusted_z_impulse * .7
+		pop_force = pop_force * .3
 
 	has_popped = true
 	z_velocity += adjusted_z_impulse * remap(iteration, 0, 4, 1, .2)

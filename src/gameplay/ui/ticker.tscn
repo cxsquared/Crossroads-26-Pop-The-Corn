@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cgxpgc5a1xolj"]
+
+[ext_resource type="Script" uid="uid://b084w8x4mtl0e" path="res://src/gameplay/ui/ticker.gd" id="1_ny140"]
+[ext_resource type="Script" uid="uid://cf6ng4lb6hjhl" path="res://src/gameplay/ui/ticker_message.gd" id="2_4bps5"]
+
+[node name="Credits" type="MarginContainer" unique_id=734824123]
+custom_minimum_size = Vector2(0, 53)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_ny140")
+speed = 100.0
+messages = Array[ExtResource("2_4bps5")]([null])
+
+[node name="Background" type="Control" parent="." unique_id=1681008564]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1471147600]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6392157)
+
+[node name="Labels" type="Control" parent="." unique_id=635156880]
+layout_mode = 2

@@ -7,7 +7,7 @@ signal on_any_pop(popcorn: Popcorn)
 @export var popcorn_scene: PackedScene = preload("res://src/gameplay/popcorn.tscn")
 
 @export_category("Each Round")
-@export var base_wave_spawn = 10
+@export var base_wave_spawn = 30
 @export var initial_spawn_number = 50
 @export var score: int = 0
 @export var target = 15
@@ -37,7 +37,7 @@ func _ready() -> void:
 
 
 func reset_pops():
-	var number_to_spawn = (Global.current_run.wave - 1) * base_wave_spawn
+	var number_to_spawn = ceil(abs(float(base_wave_spawn) / float(Global.current_run.wave) * log(Global.current_run.wave + 1)))
 	score = 0
 	score_updated.emit(score)
 	target = Global.current_run.get_current_wave_target()

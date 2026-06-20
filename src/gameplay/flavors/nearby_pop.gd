@@ -4,6 +4,7 @@ extends Flavor
 var get_popcorns_func: Callable
 var radius: float = 56
 var should_actually_run = true
+var has_run = false
 
 
 func _init(get_popcorns_callable: Callable) -> void:
@@ -39,8 +40,10 @@ func on_added(popcorn: Popcorn):
 
 
 func _on_popped(popcorn: Popcorn, _global_impact_point: Vector2, number_of_pops_left: int, iteration: int):
-	if not should_actually_run:
+	if not should_actually_run or has_run:
 		return
+
+	has_run = true
 
 	var popcorns = get_popcorns_func.call()
 
