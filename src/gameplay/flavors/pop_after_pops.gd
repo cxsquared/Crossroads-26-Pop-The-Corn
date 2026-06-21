@@ -9,7 +9,6 @@ var self_popcorn: Popcorn
 
 
 func _init() -> void:
-	decoration = preload("res://src/gameplay/flavors/flavor_dots.tscn")
 	color_override = Color.ORANGE
 
 func on_added(popcorn: Popcorn):

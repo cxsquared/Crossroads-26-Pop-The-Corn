@@ -179,13 +179,7 @@ func add_flavor(flavor: Flavor):
 	_flavors.push_back(flavor)
 	popped.connect(flavor._on_popped)
 	flavor.on_added(self)
-
-	if flavor.decoration:
-		var flavor_sprite = flavor.decoration.instantiate() as Sprite2D
-		flavor_sprite.modulate = flavor.color_override
-		flavor_sprite.rotate(randf_range(-TAU, TAU))
-
-		sprite.add_child(flavor_sprite)
+	add_child(flavor)
 
 
 func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int = 0, recovery_pop: bool = false):

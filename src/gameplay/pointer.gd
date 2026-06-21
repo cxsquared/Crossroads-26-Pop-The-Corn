@@ -15,11 +15,12 @@ signal clicked(pointer: Pointer)
 
 var _shape: Shape2D = CircleShape2D.new()
 
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not Engine.is_editor_hint():
-		$AnimatedSprite2D.play("default")
+		sprite.play("default")
 		update_sprite_scale()
 
 
@@ -38,9 +39,9 @@ func _process(_delta: float) -> void:
 
 
 func update_sprite_scale():
-	if $AnimatedSprite2D:
+	if sprite:
 		var sprite_scale = radius / sprite_width
-		$AnimatedSprite2D.scale = Vector2(sprite_scale, sprite_scale)
+		sprite.scale = Vector2(sprite_scale, sprite_scale)
 
 
 func getShape() -> Shape2D:

@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://hehw0loi0t2b"]
 
-[ext_resource type="FontFile" uid="uid://b1mphheq8mwv0" path="res://fonts/vinivicious.ttf" id="1_5cvi2"]
+[ext_resource type="FontFile" uid="uid://cy4v5icr3xxia" path="res://assets/fonts/vinivicious.ttf" id="1_5cvi2"]
 
 [resource]
 font = ExtResource("1_5cvi2")

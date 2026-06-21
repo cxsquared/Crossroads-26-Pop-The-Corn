@@ -8,19 +8,19 @@ extends Node2D
 @export var far_x = 1280 * .75
 @export var bucket_padding = 20
 
-var transitioning = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if not Global.current_run:
-		Global.new_run()
+	pass
 
-	Global.current_run.next_wave()
-	
-	if Global.level:
-		Global.level.reset_pops()
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+
+
+func show_new_customers():
 	var texture_width = bucket_texture.get_width()
 	var last_x_end: float = -1
 	var last_bucket_scale = Vector2.ZERO
@@ -53,13 +53,3 @@ func _ready() -> void:
 		last_x_end = end_x
 		last_bucket_scale = new_customer.scale
 		i += 1
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if not transitioning and Input.is_action_pressed("pop"):
-		transitioning = true
-		if Global.current_run.wave <= 1:
-			Global.main.goto_scenep("res://src/gameplay/level.tscn")
-		else:
-			Global.main.go_to_last_scene()

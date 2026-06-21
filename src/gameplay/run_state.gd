@@ -4,6 +4,7 @@ var wave: int = 0
 var current_customers: Array[Customer] = []
 var previous_customers: Array[Customer] = []
 var money: int = 0
+var flavors_bought: Array[FlavorShopData] = []
 
 
 func next_wave():

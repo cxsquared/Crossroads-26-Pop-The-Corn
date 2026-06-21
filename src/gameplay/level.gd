@@ -23,6 +23,7 @@ signal on_any_pop(popcorn: Popcorn)
 
 var popcorns: Array[Popcorn] = []
 var player_pops_left = 0
+var can_pop = true
 
 @onready var spawnable_area = $Popper/SpawnArea as SpawnArea
 
@@ -43,7 +44,7 @@ func reset_pops():
 	target = Global.current_run.get_current_wave_target()
 	player_pops_left = starting_pop_attempts
 
-	spawn_corn(number_to_spawn, true)
+	spawn_corn(number_to_spawn, Global.debug)
 
 
 func spawn_corn(amount: int, add_test_flavors = false):
@@ -72,6 +73,10 @@ func spawn_corn(amount: int, add_test_flavors = false):
 
 			if add_test_flavors:
 				_add_test_flavor(new_corn)
+
+
+func get_popcorn_in_level():
+	return popcorns
 
 
 func _add_test_flavor(new_popcorn: Popcorn):
@@ -153,8 +158,17 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 
 
 func _on_pointer_clicked(pointer: Pointer) -> void:
+	if not can_pop:
+		return
+
 	if player_pops_left <= 0:
-		Global.main.goto_scenep("res://src/gameplay/lobby.tscn", true)
+		if score < target:
+			Global.new_run()
+			Global.main.goto_scenep("res://src/gameplay/lobby.tscn", false)
+		else:
+			can_pop = false
+			Global.current_run.money += score - target
+			Global.main.goto_scenep("res://src/gameplay/lobby.tscn", true)
 		return
 
 	var overlap_query := PhysicsShapeQueryParameters2D.new()

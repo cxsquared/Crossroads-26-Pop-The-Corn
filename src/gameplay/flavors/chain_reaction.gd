@@ -3,7 +3,6 @@ extends Flavor
 
 
 func _init() -> void:
-	decoration = preload("res://src/gameplay/flavors/flavor_dots.tscn")
 	color_override = Color.CRIMSON
 
 

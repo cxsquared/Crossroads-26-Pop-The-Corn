@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bnyh7n1wqpby7"]
 
 [ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="1_2d6di"]
-[ext_resource type="PackedScene" uid="uid://c82ji4f81ylom" path="res://src/gameplay/ui/flavor_tile.tscn" id="2_qtdy1"]
+[ext_resource type="Script" uid="uid://dol4ymkelpk1j" path="res://src/gameplay/ui/store_modal.gd" id="2_qtdy1"]
 [ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="3_qtdy1"]
 
 [node name="StoreModal" type="Control" unique_id=1702250470]
@@ -12,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_qtdy1")
+script = ExtResource("2_qtdy1")
 
 [node name="BG" type="NinePatchRect" parent="." unique_id=1473584612]
 layout_mode = 1
@@ -71,42 +72,37 @@ theme_override_constants/h_separation = 38
 theme_override_constants/v_separation = 38
 alignment = 1
 
-[node name="FlavorTile2" parent="BG/Body/Body/Flavors/Choices" unique_id=216087802 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="FlavorTile3" parent="BG/Body/Body/Flavors/Choices" unique_id=1099852742 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="FlavorTile4" parent="BG/Body/Body/Flavors/Choices" unique_id=1308812072 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="FlavorTile" parent="BG/Body/Body/Flavors/Choices" unique_id=345150155 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="Flavors2" type="VBoxContainer" parent="BG/Body/Body" unique_id=510035437]
+[node name="Upgrades" type="VBoxContainer" parent="BG/Body/Body" unique_id=510035437]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="BG/Body/Body/Flavors2" unique_id=5194518]
+[node name="Label" type="Label" parent="BG/Body/Body/Upgrades" unique_id=5194518]
 layout_mode = 2
 theme_override_font_sizes/font_size = 44
-text = "Flavors"
+text = "Upgrades"
 horizontal_alignment = 1
 
-[node name="Choices" type="HFlowContainer" parent="BG/Body/Body/Flavors2" unique_id=1580395360]
+[node name="Choices" type="HFlowContainer" parent="BG/Body/Body/Upgrades" unique_id=1580395360]
 layout_mode = 2
 theme_override_constants/h_separation = 38
 theme_override_constants/v_separation = 38
 alignment = 1
 
-[node name="FlavorTile2" parent="BG/Body/Body/Flavors2/Choices" unique_id=1019713960 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
+[node name="Close" type="Button" parent="BG" unique_id=1577584199]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -25.875
+offset_right = 101.0
+offset_bottom = 22.125
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/align_to_largest_stylebox = 1
+theme_override_font_sizes/font_size = 32
+text = "Done Shopping"
 
-[node name="FlavorTile3" parent="BG/Body/Body/Flavors2/Choices" unique_id=457591452 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="FlavorTile4" parent="BG/Body/Body/Flavors2/Choices" unique_id=203709872 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
-
-[node name="FlavorTile" parent="BG/Body/Body/Flavors2/Choices" unique_id=1487976642 instance=ExtResource("2_qtdy1")]
-layout_mode = 2
+[connection signal="pressed" from="BG/Close" to="." method="_on_close_pressed"]

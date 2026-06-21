@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://caqc14m1jlq38"]
 
 [ext_resource type="Texture2D" uid="uid://cqvielml1btbk" path="res://assets/textures/lobby.png" id="1_04e54"]
+[ext_resource type="Script" uid="uid://i1ucl16gi28r" path="res://src/gameplay/lobby.gd" id="1_c1itl"]
 [ext_resource type="Script" uid="uid://bb1fol2p2mkv8" path="res://src/gameplay/customers.gd" id="2_5ppsf"]
+[ext_resource type="PackedScene" uid="uid://bnyh7n1wqpby7" path="res://src/gameplay/ui/StoreModal.tscn" id="4_ap73k"]
 
 [node name="Lobby" type="Node2D" unique_id=381300222]
+script = ExtResource("1_c1itl")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=767599023]
 texture = ExtResource("1_04e54")
@@ -15,3 +18,8 @@ small_bucket_scale = Vector2(0.7, 1)
 medium_bucket_scale = Vector2(1, 1.2)
 large_bucket_scale = Vector2(2, 2)
 far_x = 600.0
+
+[node name="StoreModal" parent="." unique_id=1702250470 instance=ExtResource("4_ap73k")]
+visible = false
+
+[connection signal="closed" from="StoreModal" to="." method="_on_store_modal_closed"]

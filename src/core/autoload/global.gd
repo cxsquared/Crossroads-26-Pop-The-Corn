@@ -9,6 +9,7 @@ var current_run: RunState = null
 
 
 func new_run():
+	level = null
 	current_run = RunState.new()
 
 

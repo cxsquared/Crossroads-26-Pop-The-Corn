@@ -16,6 +16,8 @@ var _is_transitioning = false
 var _deferred_scene = false
 
 var _last_scene: Node = null
+var _last_ui: Array[Node] = []
+
 var _should_save_current_scene = false
 
 @onready var transition = preload("res://src/core/transition.tscn")
@@ -130,6 +132,10 @@ func _free_current_scene():
 	current_scene.queue_free()
 	current_scene = null
 
+	for child in hud_root.get_children():
+		if _last_ui.is_empty() or not _last_ui.has(child):
+			child.queue_free()
+
 	# wait for the scene to actually be freed
 	await get_tree().process_frame
 
@@ -139,6 +145,7 @@ func _save_current_scene():
 		return
 
 	_last_scene = current_scene
+	_last_ui = hud_root.get_children()
 	current_scene = null
 
 	# wait to be like freeing a scene
@@ -150,8 +157,8 @@ func _transition_to_new_scene(scene: PackedScene):
 		if _should_save_current_scene:
 			_should_save_current_scene = false
 			_save_current_scene()
-			if _last_scene:
-				_last_scene.hide()
+			_hide_last_scene()
+
 		else:
 			_free_current_scene()
 
@@ -159,16 +166,39 @@ func _transition_to_new_scene(scene: PackedScene):
 	)
 
 
+func _hide_last_scene():
+	if _last_scene:
+		_last_scene.hide()
+
+	for node in _last_ui:
+		node.hide()
+
+
 func _transition_last_scene():
 	_transition("out", func(_anim_name):
 		_free_current_scene()
 
 		current_scene = _last_scene
-		_last_scene.show()
+		_show_last_scene()
 
-		_transition("in")
+		_transition("in", func(_anim_name):
+			if Global.level:
+				Global.level.can_pop = true
+		)
 		_deferred_scene = false
 	)
+
+
+func _show_last_scene():
+	if _last_scene:
+		_last_scene.show()
+
+	_last_scene = null
+
+	for node in _last_ui:
+		node.show()
+
+	_last_ui.clear()
 
 
 func _instantiate_new_scene(scene: PackedScene):

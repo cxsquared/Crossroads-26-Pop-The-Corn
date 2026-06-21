@@ -8,18 +8,15 @@ var has_run = false
 
 
 func _init(get_popcorns_callable: Callable) -> void:
+	color_override = Color.PURPLE
 
 
-	# callables are weird
 	get_popcorns_func = Callable(get_popcorns_callable)
 
 	assert(get_popcorns_func, "Please pass in popcorn get func")
 
 	var pop_corn_check = get_popcorns_func.call()
 	assert(pop_corn_check is Array[Popcorn], "get_popcorns_func should return array of popcorn")
-
-	decoration = preload("res://src/gameplay/flavors/flavor_dots.tscn")
-	color_override = Color.PURPLE
 
 
 func on_added(popcorn: Popcorn):

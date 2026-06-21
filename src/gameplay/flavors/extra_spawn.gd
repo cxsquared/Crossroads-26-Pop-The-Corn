@@ -5,7 +5,6 @@ var popcorn_scene = preload("res://src/gameplay/popcorn.tscn")
 
 
 func _init() -> void:
-	decoration = preload("res://src/gameplay/flavors/flavor_dots.tscn")
 	color_override = Color.YELLOW_GREEN
 
 
@@ -29,7 +28,6 @@ func _on_popped(og_popcorn: Popcorn, global_impact_point: Vector2, number_of_pop
 			og_popcorn.hit_floor.emit(hit_floor_corn)
 	)
 	og_popcorn.get_parent().add_child(new_corn)
-
 
 ##	for flavor in og_popcorn._flavors:
 ##		if flavor is not ExtraSpawn:
