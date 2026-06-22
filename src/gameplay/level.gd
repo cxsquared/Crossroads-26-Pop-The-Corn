@@ -30,7 +30,8 @@ var can_pop = true
 @onready var pops_left_label: Label = $"LevelHud/Pops Left"
 @onready var hud = $LevelHud
 @onready var pointer: Pointer = $Pointer
-@onready var click_to_continue :Label = $LevelHud/ClickToContinue
+@onready var click_to_continue: Label = $LevelHud/ClickToContinue
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -44,7 +45,6 @@ func _ready() -> void:
 	click_to_continue.hide()
 
 
-
 func reset_pops():
 	var number_to_spawn = Global.current_run.get_current_wave_target() + ceil(abs(float(base_wave_spawn) / float(Global.current_run.wave) * log(Global.current_run.wave + 1)))
 	score = 0
@@ -53,7 +53,6 @@ func reset_pops():
 	player_pops_left = starting_pop_attempts
 	click_to_continue.hide()
 
-	
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 	if Global.current_run.upgrades_bought.has("Special Delivery"):
@@ -75,6 +74,7 @@ func reset_pops():
 
 	if not flavor_side_bar._flavors.is_empty():
 		flavor_side_bar.extend(true, false)
+		can_pop = false
 
 
 func spawn_corn(amount: int, add_test_flavors = false):
@@ -224,7 +224,7 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 
 
 func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
-	if not can_pop:
+	if not can_pop or not flavor_side_bar.fully_retracted:
 		return
 
 	if flavor:
@@ -235,7 +235,7 @@ func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 
 		return
 
-	if player_pops_left <= 0:
+	if player_pops_left <= 0 and visible and not Global.main._is_transitioning:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 		if score < target:
@@ -257,10 +257,9 @@ func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 	if hit_corn:
 		player_pops_left -= 1
 		pops_left_label.text = "%d Pops Left" % player_pops_left
-		
+
 		if player_pops_left <= 0:
 			click_to_continue.show()
-
 
 
 func _on_popped(popcorn: Popcorn, _global_impact_point: Vector2, _number_of_pops_left: int, _iteration: int):

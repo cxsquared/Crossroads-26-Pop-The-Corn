@@ -13,6 +13,7 @@ signal retracted()
 var side_bar_tween: Tween
 var auto_hide_tween: Tween
 var fully_extended = false
+var fully_retracted = true
 
 var _initial_pos
 var _flavors: Dictionary[String, FlavorItem] = {}
@@ -67,6 +68,7 @@ func update_flavor_items():
 
 
 func extend(auto_hide = false, play_sound = true):
+	fully_retracted = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	hide_timer.stop()
@@ -98,6 +100,7 @@ func retract():
 	side_bar_tween.tween_callback(func():
 			retracted.emit()
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+			fully_retracted = true
 
 	)
 	side_bar_tween.play()

@@ -13,6 +13,8 @@ var tween: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 	$LobbyUi.reparent(Global.hud)
 
 	if not Global.current_run:
@@ -32,6 +34,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 	if not exiting and not summary.visible and not store_modal.visible and not transitioning and Input.is_action_pressed("pop"):
 		exiting = true
 		transitioning = true
