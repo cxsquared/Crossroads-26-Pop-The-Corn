@@ -31,6 +31,7 @@ var _should_save_current_scene = false
 func _ready() -> void:
 	Global.hud = hud_root
 	Global.main = self
+	Global.ui_sounds = $Hud/UiSounds
 
 	if start_scene:
 		goto_scene(start_scene)

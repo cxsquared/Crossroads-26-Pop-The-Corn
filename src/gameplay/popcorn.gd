@@ -8,6 +8,7 @@ signal popped(popcorn: Popcorn, global_impact_point: Vector2, number_of_pops_lef
 
 @export var popped_sprite = preload("res://assets/textures/popcorn.png")
 @export var testing_flavors: Array[Flavor]
+@export var pop_sounds: Array[AudioStream] = []
 
 @export_category("Stats")
 @export var pop_force: float = 1500.0
@@ -43,6 +44,7 @@ var _flavors: Array[Flavor]
 @onready var popped_collider = $Popped
 @onready var unpopped_collider = $Unpopped
 @onready var score_label: Label = $Score
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -214,6 +216,16 @@ func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int 
 
 	z_velocity += adjusted_z_impulse * remap(min(iteration, 4), 0, 4, 1, .5)
 	z = 1
+
+	if not has_popped:
+		var delay = create_tween()
+		delay.tween_callback(func():
+				audio_player.stream = pop_sounds.pick_random()
+				audio_player.pitch_scale = randf_range(.95, 1.05)
+				audio_player.play()
+		).set_delay(randf_range(0, .25))
+		if Global.rand_bool(2):
+			delay.play()
 
 	has_popped = true
 	_in_air = true

@@ -63,10 +63,12 @@ func update_tile():
 
 
 func _on_buy_pressed() -> void:
+	Global.ui_sounds.play_buy()
+
 	$Bougth.show()
 	disable()
 	if flavor:
 		bought_flavor.emit(flavor, price)
-		
+
 	if upgrade:
 		bought_upgrade.emit(upgrade, price)

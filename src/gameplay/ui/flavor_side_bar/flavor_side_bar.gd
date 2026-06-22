@@ -7,9 +7,12 @@ signal retracted()
 
 @export var side_item_scene = preload("res://src/gameplay/ui/flavor_side_bar/flavor_side_item.tscn")
 @export var hide_offset = -25
+@export var extend_sound: AudioStream
+@export var retract_sound: AudioStream
 
 var side_bar_tween: Tween
 var auto_hide_tween: Tween
+var fully_extended = false
 
 var _initial_pos
 var _flavors: Dictionary[String, FlavorItem] = {}
@@ -18,6 +21,7 @@ var _item_hover = false
 @onready var side_bar: NinePatchRect = $NinePatchRect
 @onready var flavor_container: VBoxContainer = $NinePatchRect/MarginContainer/FlavorContainer
 @onready var hide_timer: Timer = $HideTimer
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -56,10 +60,14 @@ func update_flavor_items():
 			_flavors.erase(item_key)
 			item.queue_free()
 
-
-func extend(auto_hide = false):
 	if _flavors.is_empty():
-		return
+		$NinePatchRect/Empty.show()
+	else:
+		$NinePatchRect/Empty.hide()
+
+
+func extend(auto_hide = false, play_sound = true):
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	hide_timer.stop()
 
@@ -68,9 +76,16 @@ func extend(auto_hide = false):
 
 	side_bar_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	side_bar_tween.tween_property(side_bar, "position", Vector2(_initial_pos.x, side_bar.position.y), .2)
+	side_bar_tween.tween_callback(func():
+			fully_extended = true
+	)
 	side_bar_tween.play()
 
 	extended.emit()
+
+	if not fully_extended and play_sound:
+		audio_player.stream = extend_sound
+		audio_player.play()
 
 	if auto_hide:
 		$AutoHide.start()
@@ -82,8 +97,16 @@ func retract():
 	side_bar_tween.tween_property(side_bar, "position", Vector2(_initial_pos.x + side_bar.size.x + hide_offset, side_bar.position.y), .2)
 	side_bar_tween.tween_callback(func():
 			retracted.emit()
+			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 	)
 	side_bar_tween.play()
+
+	if fully_extended:
+		audio_player.stream = retract_sound
+		audio_player.play()
+
+	fully_extended = false
 
 
 func _on_item_mouse_entered() -> void:
@@ -110,6 +133,8 @@ func _on_hide_timer_timeout() -> void:
 
 
 func _on_flavor_item_clicked(flavor_data: FlavorShopData):
+	Global.ui_sounds.play_confirm()
+	fully_extended = false
 	flavor_item_clicked.emit(flavor_data)
 	_item_hover = false
 	retract()

@@ -40,6 +40,8 @@ func _ready() -> void:
 	pops_left_label.text = "%d Pops Left" % player_pops_left
 
 	spawn_corn(initial_spawn_number, Global.debug)
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 
 
 func reset_pops():
@@ -48,6 +50,8 @@ func reset_pops():
 	score_updated.emit(score)
 	target = Global.current_run.get_current_wave_target()
 	player_pops_left = starting_pop_attempts
+	
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 	if Global.current_run.upgrades_bought.has("Special Delivery"):
 		Global.current_run.upgrades_bought.erase("Special Delivery")
@@ -67,7 +71,7 @@ func reset_pops():
 	flavor_side_bar.update_flavor_items()
 
 	if not flavor_side_bar._flavors.is_empty():
-		flavor_side_bar.extend(true)
+		flavor_side_bar.extend(true, false)
 
 
 func spawn_corn(amount: int, add_test_flavors = false):
@@ -229,6 +233,8 @@ func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 		return
 
 	if player_pops_left <= 0:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 		if score < target:
 			Global.main.goto_scenep("res://src/gameplay/game_over/game_over.tscn", false)
 		else:

@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://bnyh7n1wqpby7"]
 
-[ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="1_2d6di"]
-[ext_resource type="Script" uid="uid://dol4ymkelpk1j" path="res://src/gameplay/ui/shop_modal/store_modal.gd" id="2_qtdy1"]
-[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_pkxwf"]
-[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="3_qtdy1"]
-[ext_resource type="Resource" uid="uid://ddgv7rwj3oxbf" path="res://src/gameplay/flavors/chain_reaction.tres" id="4_3p2ku"]
-[ext_resource type="Resource" uid="uid://b0c8dqy7uxl7x" path="res://src/gameplay/flavors/extra_spawn.tres" id="5_ulfwq"]
-[ext_resource type="Resource" uid="uid://d2njrundj5dh8" path="res://src/gameplay/flavors/nearby_pop.tres" id="6_0eqnd"]
-[ext_resource type="Resource" uid="uid://clu32ple34q3j" path="res://src/gameplay/flavors/pop_after_pops.tres" id="7_x75w1"]
-[ext_resource type="Script" uid="uid://bm4n5v4idih8y" path="res://src/gameplay/upgrades/upgrade_data.gd" id="8_cmffi"]
-[ext_resource type="Resource" uid="uid://cdvctv3ytsuf" path="res://src/gameplay/upgrades/delivery.tres" id="9_g11rt"]
-[ext_resource type="Resource" uid="uid://d1g3yl81kxi0q" path="res://src/gameplay/upgrades/extra_pop.tres" id="10_1ubka"]
-[ext_resource type="Resource" uid="uid://cv1lal6ud31k6" path="res://src/gameplay/upgrades/left_overs.tres" id="11_7yeeu"]
-[ext_resource type="Resource" uid="uid://bhelrlpamfjlc" path="res://src/gameplay/upgrades/radius_increase.tres" id="12_l44yn"]
-[ext_resource type="FontFile" uid="uid://bpuxcyk7csghl" path="res://assets/fonts/vinizinho.ttf" id="14_g11rt"]
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_lcw4c"]
+[ext_resource type="Script" uid="uid://dol4ymkelpk1j" path="res://src/gameplay/ui/shop_modal/store_modal.gd" id="2_4tb41"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_r3o18"]
+[ext_resource type="Resource" uid="uid://ddgv7rwj3oxbf" path="res://src/gameplay/flavors/chain_reaction.tres" id="4_dbu11"]
+[ext_resource type="Resource" uid="uid://b0c8dqy7uxl7x" path="res://src/gameplay/flavors/extra_spawn.tres" id="5_kbgl0"]
+[ext_resource type="Resource" uid="uid://d2njrundj5dh8" path="res://src/gameplay/flavors/nearby_pop.tres" id="6_5mwli"]
+[ext_resource type="Resource" uid="uid://clu32ple34q3j" path="res://src/gameplay/flavors/pop_after_pops.tres" id="7_or5gx"]
+[ext_resource type="Script" uid="uid://bm4n5v4idih8y" path="res://src/gameplay/upgrades/upgrade_data.gd" id="8_n7b2v"]
+[ext_resource type="Resource" uid="uid://cdvctv3ytsuf" path="res://src/gameplay/upgrades/delivery.tres" id="9_k5suy"]
+[ext_resource type="Resource" uid="uid://d1g3yl81kxi0q" path="res://src/gameplay/upgrades/extra_pop.tres" id="10_mfbbv"]
+[ext_resource type="Resource" uid="uid://cv1lal6ud31k6" path="res://src/gameplay/upgrades/left_overs.tres" id="11_ltaik"]
+[ext_resource type="Resource" uid="uid://bhelrlpamfjlc" path="res://src/gameplay/upgrades/radius_increase.tres" id="12_7ekgs"]
+[ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="13_hwcgt"]
+[ext_resource type="FontFile" uid="uid://bpuxcyk7csghl" path="res://assets/fonts/vinizinho.ttf" id="14_uggi7"]
 
 [node name="StoreModal" type="Control" unique_id=1702250470]
 layout_mode = 3
@@ -22,10 +22,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_qtdy1")
-script = ExtResource("2_qtdy1")
-available_flavors = Array[ExtResource("3_pkxwf")]([ExtResource("4_3p2ku"), ExtResource("5_ulfwq"), ExtResource("6_0eqnd"), ExtResource("7_x75w1")])
-available_upgrades = Array[ExtResource("8_cmffi")]([ExtResource("9_g11rt"), ExtResource("10_1ubka"), ExtResource("11_7yeeu"), ExtResource("12_l44yn")])
+theme = ExtResource("1_lcw4c")
+script = ExtResource("2_4tb41")
+available_flavors = Array[ExtResource("3_r3o18")]([ExtResource("4_dbu11"), ExtResource("5_kbgl0"), ExtResource("6_5mwli"), ExtResource("7_or5gx")])
+available_upgrades = Array[ExtResource("8_n7b2v")]([ExtResource("9_k5suy"), ExtResource("10_mfbbv"), ExtResource("11_ltaik"), ExtResource("12_7ekgs")])
 
 [node name="BG" type="NinePatchRect" parent="." unique_id=1473584612]
 layout_mode = 1
@@ -40,7 +40,7 @@ offset_right = 613.875
 offset_bottom = 303.875
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_2d6di")
+texture = ExtResource("13_hwcgt")
 
 [node name="Title" type="Label" parent="BG" unique_id=1005699668]
 layout_mode = 1
@@ -52,7 +52,7 @@ offset_top = -28.125
 offset_right = 68.0
 offset_bottom = 44.875
 grow_horizontal = 2
-theme = ExtResource("3_qtdy1")
+theme = ExtResource("1_lcw4c")
 theme_override_font_sizes/font_size = 60
 text = "Store"
 horizontal_alignment = 1
@@ -67,8 +67,8 @@ offset_top = 41.25
 offset_right = 100.0
 offset_bottom = 114.25
 grow_horizontal = 2
-theme = ExtResource("3_qtdy1")
-theme_override_fonts/font = ExtResource("14_g11rt")
+theme = ExtResource("1_lcw4c")
+theme_override_fonts/font = ExtResource("14_uggi7")
 theme_override_font_sizes/font_size = 32
 text = "You have $00 left"
 horizontal_alignment = 1
@@ -82,7 +82,7 @@ offset_top = 32.875
 offset_bottom = 14.875
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_qtdy1")
+theme = ExtResource("1_lcw4c")
 
 [node name="Body" type="HBoxContainer" parent="BG/Body" unique_id=905353957]
 layout_mode = 2

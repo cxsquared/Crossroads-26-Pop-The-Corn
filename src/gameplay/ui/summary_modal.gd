@@ -28,6 +28,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("pop"):
+		Global.ui_sounds.play_confirm()
 		if tween_done:
 			hide()
 			summary_closed.emit()
@@ -41,16 +42,20 @@ func _input(event: InputEvent) -> void:
 
 
 func show_summary():
+	Global.ui_sounds.play_slide()
 	tween = create_tween()
 	tween.tween_property(self, "position", og_position, .6).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).from(Vector2(0, -1000))
+	tween.tween_method(update_text.bind(popped_value), 0, Global.current_run.popped, 0.4).set_delay(0.2)
 	tween.tween_method(update_text.bind(target_value), 0, Global.current_run.previous_target, 0.4)
-	tween.parallel().tween_method(update_text.bind(popped_value), 0, Global.current_run.popped, 0.4).set_delay(0.2)
 	tween.tween_method(update_text.bind(money_value, "$%d"), 0, Global.current_run.popped - Global.current_run.previous_target, 0.2).set_delay(0.2)
 	tween.tween_callback(func():
 			tween_done = true
+			if Global.current_run.popped - Global.current_run.previous_target > 0:
+				Global.ui_sounds.play_buy()
 	)
 	tween.play()
 
 
 func update_text(value: int, target: Label, text_string: String = "%d"):
+	Global.ui_sounds.play_increase(value == 0)
 	target.text = text_string % value

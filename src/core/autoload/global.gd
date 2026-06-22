@@ -7,6 +7,8 @@ var hud: Control
 var level: Level
 var current_run: RunState = null
 var default_theme: Theme = preload("res://assets/themes/default_ui_theme.theme")
+var ui_sounds: UiSounds
+
 
 
 func _process(_delta: float) -> void:

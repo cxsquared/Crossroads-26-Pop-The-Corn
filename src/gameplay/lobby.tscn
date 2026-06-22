@@ -3,9 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://cqvielml1btbk" path="res://assets/textures/lobby.png" id="1_04e54"]
 [ext_resource type="Script" uid="uid://i1ucl16gi28r" path="res://src/gameplay/lobby.gd" id="1_c1itl"]
 [ext_resource type="Script" uid="uid://bb1fol2p2mkv8" path="res://src/gameplay/customers.gd" id="2_5ppsf"]
-[ext_resource type="PackedScene" uid="uid://bnyh7n1wqpby7" path="res://src/gameplay/ui/shop_modal/StoreModal.tscn" id="4_ap73k"]
+[ext_resource type="PackedScene" uid="uid://bnyh7n1wqpby7" path="res://src/gameplay/ui/shop_modal/store_modal.tscn" id="4_ap73k"]
+[ext_resource type="AudioStream" uid="uid://dx7adjtkgkvhu" path="res://assets/sfx/slide_00.ogg" id="4_qileb"]
 [ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="4_xiq1g"]
+[ext_resource type="AudioStream" uid="uid://cfp77exs7x6qu" path="res://assets/sfx/slide_01.ogg" id="5_8nrjh"]
+[ext_resource type="AudioStream" uid="uid://b2esiwmn6d1g" path="res://assets/sfx/slide_02.ogg" id="6_bm4b0"]
 [ext_resource type="PackedScene" uid="uid://b83fxehvnr8h2" path="res://src/gameplay/ui/summary_modal.tscn" id="6_xiq1g"]
+[ext_resource type="AudioStream" uid="uid://b7bux5fy02on4" path="res://assets/sfx/slide_03.ogg" id="7_xqo3f"]
 
 [node name="Lobby" type="Node2D" unique_id=381300222]
 script = ExtResource("1_c1itl")
@@ -16,6 +20,7 @@ centered = false
 
 [node name="Customers" type="Node2D" parent="." unique_id=355791120]
 script = ExtResource("2_5ppsf")
+slide_sounds = Array[AudioStream]([ExtResource("4_qileb"), ExtResource("5_8nrjh"), ExtResource("6_bm4b0"), ExtResource("7_xqo3f")])
 small_bucket_scale = Vector2(0.6, 0.9)
 medium_bucket_scale = Vector2(0.8, 1)
 large_bucket_scale = Vector2(1, 1.3)

@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 		can_click = false
 		$ClickCooldown.start()
 		if flavor:
+			$AudioStreamPlayer2D.play()
 			flavor = null
 			flavor_sprite.hide()
 			sprite.show()
@@ -77,8 +78,12 @@ func _on_flavor_side_bar_flavor_item_clicked(flavor_data: FlavorShopData) -> voi
 
 func _on_flavor_side_bar_extended() -> void:
 	can_click = false
+	sprite.hide()
 
 
 func _on_flavor_side_bar_retracted() -> void:
+	if not flavor:
+		sprite.show()
+
 	if $ClickCooldown.is_stopped():
 		can_click = true

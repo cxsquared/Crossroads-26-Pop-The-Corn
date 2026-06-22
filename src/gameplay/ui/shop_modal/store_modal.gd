@@ -90,7 +90,7 @@ func _on_bought_flavor(flavor_data: FlavorShopData, price: int):
 
 func _update_money(price: int):
 	Global.current_run.money -= price
-	money_label.text = "You've got $%d" % Global.current_run.money
+	money_label.text = "You have $%d" % Global.current_run.money
 
 	for tile in _tiles:
 		if tile.price > Global.current_run.money:
@@ -99,4 +99,5 @@ func _update_money(price: int):
 
 func _on_close_pressed() -> void:
 	hide()
+	Global.ui_sounds.play_confirm()
 	closed.emit()

@@ -3,6 +3,7 @@ extends Node2D
 signal all_customers_added()
 
 @export var bucket_texture = preload("res://assets/textures/bucket.png")
+@export var slide_sounds: Array[AudioStream] = []
 
 @export var small_bucket_scale = Vector2(0.5, .5)
 @export var medium_bucket_scale = Vector2(.8, .7)
@@ -28,7 +29,14 @@ func show_new_customers():
 	var i = 1
 	var total_customers = Global.current_run.current_customers.size()
 	for customer in Global.current_run.current_customers:
+		var new_sound = AudioStreamPlayer2D.new()
+		new_sound.stream = slide_sounds.pick_random()
+		var sound_tween = create_tween()
+		sound_tween.tween_callback(func():
+				new_sound.play()
+		).set_delay(i * .3)
 		var new_customer = Sprite2D.new()
+		new_customer.add_child(new_sound)
 		new_customer.texture = bucket_texture
 
 		match customer.size:
@@ -64,6 +72,7 @@ func show_new_customers():
 		tween.parallel().tween_callback(func():
 				new_customer.add_child(target_label)
 				target_tween.play()
+				sound_tween.play()
 		).set_delay(i * .1)
 		if i >= total_customers - 1:
 			tween.tween_callback(func():

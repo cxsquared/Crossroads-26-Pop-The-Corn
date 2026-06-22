@@ -35,12 +35,14 @@ func _process(_delta: float) -> void:
 	if not exiting and not summary.visible and not store_modal.visible and not transitioning and Input.is_action_pressed("pop"):
 		exiting = true
 		transitioning = true
+		Global.ui_sounds.play_confirm()
+
 		if Global.current_run.wave <= 1:
 			Global.main.goto_scenep("res://src/gameplay/level.tscn")
 		else:
 			if tween:
 				tween.kill()
-				
+
 			Global.level.reset_pops()
 			Global.main.go_to_last_scene()
 

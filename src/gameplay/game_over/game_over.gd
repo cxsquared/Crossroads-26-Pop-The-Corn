@@ -17,4 +17,5 @@ func _input(event: InputEvent) -> void:
 	if not exiting and event.is_action_pressed("pop"):
 		exiting = true
 		Global.new_run()
+		Global.ui_sounds.play_confirm()
 		Global.main.goto_scenep("res://src/gameplay/main_menu/main_menu.tscn", false)

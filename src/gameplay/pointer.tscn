@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ctksbtypfiuvo" path="res://assets/textures/oil_pointer/oil_pointer0004.png" id="5_nmf4r"]
 [ext_resource type="Texture2D" uid="uid://ds3rr4ahl2dh" path="res://assets/textures/oil_pointer/oil_pointer0005.png" id="6_wpv76"]
 [ext_resource type="Texture2D" uid="uid://bthfd1nhdtb0t" path="res://assets/textures/oil_pointer/oil_pointer0001.png" id="7_igbgf"]
+[ext_resource type="AudioStream" uid="uid://5xhultsd7wtt" path="res://assets/sfx/shake.ogg" id="8_bi57l"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_03jr6"]
 animations = [{
@@ -64,5 +65,8 @@ frame_progress = 0.76370925
 
 [node name="FlavorSprite" type="Sprite2D" parent="." unique_id=749341958]
 visible = false
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=436729403]
+stream = ExtResource("8_bi57l")
 
 [connection signal="timeout" from="ClickCooldown" to="." method="_on_click_cooldown_timeout"]

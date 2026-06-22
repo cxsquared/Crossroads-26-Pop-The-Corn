@@ -3,7 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://c2bpvhcaobcg7" path="res://assets/textures/kernel.png" id="1_25ett"]
 [ext_resource type="Script" uid="uid://2f6uovdl8lfe" path="res://src/gameplay/popcorn.gd" id="1_sbbnm"]
 [ext_resource type="Texture2D" uid="uid://xt1m0woah8io" path="res://assets/textures/shadow.png" id="2_ktqci"]
+[ext_resource type="AudioStream" uid="uid://d0b4ulhx8x7wq" path="res://assets/sfx/pop_00.ogg" id="2_y2poe"]
+[ext_resource type="AudioStream" uid="uid://dmnwrm4fwpf10" path="res://assets/sfx/pop_01.ogg" id="3_dk8hn"]
+[ext_resource type="AudioStream" uid="uid://d3gjntlt726ce" path="res://assets/sfx/pop_02.ogg" id="4_36cxl"]
 [ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="4_sva8g"]
+[ext_resource type="AudioStream" uid="uid://ilvqing7qnr3" path="res://assets/sfx/pop_03.ogg" id="5_6qdyu"]
+[ext_resource type="AudioStream" uid="uid://okcl884au5h3" path="res://assets/sfx/pop_04.ogg" id="6_8tjjb"]
+[ext_resource type="AudioStream" uid="uid://bekiqgut6l5y5" path="res://assets/sfx/pop_05.ogg" id="7_cwmmu"]
+[ext_resource type="AudioStream" uid="uid://c2jtb18sv8hdr" path="res://assets/sfx/pop_06.ogg" id="8_n0we7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sbbnm"]
 rough = true
@@ -25,6 +32,7 @@ contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 2.0
 script = ExtResource("1_sbbnm")
+pop_sounds = Array[AudioStream]([ExtResource("2_y2poe"), ExtResource("3_dk8hn"), ExtResource("4_36cxl"), ExtResource("5_6qdyu"), ExtResource("6_8tjjb"), ExtResource("7_cwmmu"), ExtResource("8_n0we7")])
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1651775173]
 visible = false
@@ -69,6 +77,10 @@ theme = ExtResource("4_sva8g")
 theme_override_font_sizes/font_size = 35
 text = "+1"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1271099237]
+volume_db = 3.0
+max_polyphony = 3
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="SpawnDelayPostPop" to="." method="_on_spawn_delay_post_pop_timeout"]

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b8sp5sq6ua5ub"]
+
+[ext_resource type="Script" uid="uid://bui0qu3ywyfkq" path="res://src/core/ui_sounds.gd" id="1_11414"]
+[ext_resource type="AudioStream" uid="uid://d0b4ulhx8x7wq" path="res://assets/sfx/pop_00.ogg" id="2_h6tt5"]
+[ext_resource type="AudioStream" uid="uid://dmnwrm4fwpf10" path="res://assets/sfx/pop_01.ogg" id="3_mh2yn"]
+[ext_resource type="AudioStream" uid="uid://d3gjntlt726ce" path="res://assets/sfx/pop_02.ogg" id="4_hxwkh"]
+[ext_resource type="AudioStream" uid="uid://ilvqing7qnr3" path="res://assets/sfx/pop_03.ogg" id="5_0iljg"]
+[ext_resource type="AudioStream" uid="uid://okcl884au5h3" path="res://assets/sfx/pop_04.ogg" id="6_03oa7"]
+[ext_resource type="AudioStream" uid="uid://bekiqgut6l5y5" path="res://assets/sfx/pop_05.ogg" id="7_8xho8"]
+[ext_resource type="AudioStream" uid="uid://c2jtb18sv8hdr" path="res://assets/sfx/pop_06.ogg" id="8_tq2bi"]
+[ext_resource type="AudioStream" uid="uid://cs2c51w54kpwv" path="res://assets/sfx/cash.ogg" id="9_mh2yn"]
+[ext_resource type="AudioStream" uid="uid://dx7adjtkgkvhu" path="res://assets/sfx/slide_00.ogg" id="10_8xho8"]
+[ext_resource type="AudioStream" uid="uid://cfp77exs7x6qu" path="res://assets/sfx/slide_01.ogg" id="11_tq2bi"]
+[ext_resource type="AudioStream" uid="uid://b2esiwmn6d1g" path="res://assets/sfx/slide_02.ogg" id="12_5alcy"]
+[ext_resource type="AudioStream" uid="uid://b7bux5fy02on4" path="res://assets/sfx/slide_03.ogg" id="13_c2qo2"]
+
+[node name="UiSounds" type="AudioStreamPlayer" unique_id=1175265155]
+max_polyphony = 2
+script = ExtResource("1_11414")
+confirm_sounds = Array[AudioStream]([ExtResource("2_h6tt5"), ExtResource("3_mh2yn"), ExtResource("4_hxwkh"), ExtResource("5_0iljg"), ExtResource("6_03oa7"), ExtResource("7_8xho8"), ExtResource("8_tq2bi")])
+cash_sound = ExtResource("9_mh2yn")
+slide_sounds = Array[AudioStream]([ExtResource("10_8xho8"), ExtResource("11_tq2bi"), ExtResource("12_5alcy"), ExtResource("13_c2qo2")])
