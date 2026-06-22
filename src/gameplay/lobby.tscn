@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cqvielml1btbk" path="res://assets/textures/lobby.png" id="1_04e54"]
 [ext_resource type="Script" uid="uid://i1ucl16gi28r" path="res://src/gameplay/lobby.gd" id="1_c1itl"]
 [ext_resource type="Script" uid="uid://bb1fol2p2mkv8" path="res://src/gameplay/customers.gd" id="2_5ppsf"]
-[ext_resource type="PackedScene" uid="uid://bnyh7n1wqpby7" path="res://src/gameplay/ui/StoreModal.tscn" id="4_ap73k"]
+[ext_resource type="PackedScene" uid="uid://bnyh7n1wqpby7" path="res://src/gameplay/ui/shop_modal/StoreModal.tscn" id="4_ap73k"]
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="4_xiq1g"]
+[ext_resource type="PackedScene" uid="uid://b83fxehvnr8h2" path="res://src/gameplay/ui/summary_modal.tscn" id="6_xiq1g"]
 
 [node name="Lobby" type="Node2D" unique_id=381300222]
 script = ExtResource("1_c1itl")
@@ -14,12 +16,62 @@ centered = false
 
 [node name="Customers" type="Node2D" parent="." unique_id=355791120]
 script = ExtResource("2_5ppsf")
-small_bucket_scale = Vector2(0.7, 1)
-medium_bucket_scale = Vector2(1, 1.2)
-large_bucket_scale = Vector2(2, 2)
+small_bucket_scale = Vector2(0.6, 0.9)
+medium_bucket_scale = Vector2(0.8, 1)
+large_bucket_scale = Vector2(1, 1.3)
 far_x = 600.0
 
-[node name="StoreModal" parent="." unique_id=1702250470 instance=ExtResource("4_ap73k")]
-visible = false
+[node name="LobbyUi" type="Control" parent="." unique_id=2089383628]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("4_xiq1g")
 
-[connection signal="closed" from="StoreModal" to="." method="_on_store_modal_closed"]
+[node name="StoreModal" parent="LobbyUi" unique_id=1702250470 instance=ExtResource("4_ap73k")]
+visible = false
+layout_mode = 1
+
+[node name="SummaryModal" parent="LobbyUi" unique_id=1983304998 instance=ExtResource("6_xiq1g")]
+layout_mode = 1
+
+[node name="PiecesNeeded" type="Label" parent="LobbyUi" unique_id=2130730558]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -396.0
+offset_top = 27.0
+offset_right = 396.0
+offset_bottom = 115.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 73
+text = "You need 0 Popcorn Pieces"
+horizontal_alignment = 1
+
+[node name="Continue" type="Label" parent="LobbyUi" unique_id=195825343]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -396.0
+offset_top = -114.0
+offset_right = 396.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 73
+text = "Click to start popping"
+horizontal_alignment = 1
+
+[connection signal="all_customers_added" from="Customers" to="." method="_on_customers_all_customers_added"]
+[connection signal="closed" from="LobbyUi/StoreModal" to="." method="_on_store_modal_closed"]
+[connection signal="summary_closed" from="LobbyUi/SummaryModal" to="." method="_on_summary_modal_summary_closed"]

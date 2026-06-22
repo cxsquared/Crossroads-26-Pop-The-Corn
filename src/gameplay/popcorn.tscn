@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c2bpvhcaobcg7" path="res://assets/textures/kernel.png" id="1_25ett"]
 [ext_resource type="Script" uid="uid://2f6uovdl8lfe" path="res://src/gameplay/popcorn.gd" id="1_sbbnm"]
 [ext_resource type="Texture2D" uid="uid://xt1m0woah8io" path="res://assets/textures/shadow.png" id="2_ktqci"]
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="4_sva8g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sbbnm"]
 rough = true
@@ -49,6 +50,25 @@ texture = ExtResource("1_25ett")
 [node name="SpawnDelayPostPop" type="Timer" parent="." unique_id=252195706]
 one_shot = true
 autostart = true
+
+[node name="Score" type="Label" parent="." unique_id=614365031]
+visible = false
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_sva8g")
+theme_override_font_sizes/font_size = 35
+text = "+1"
+horizontal_alignment = 1
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="SpawnDelayPostPop" to="." method="_on_spawn_delay_post_pop_timeout"]

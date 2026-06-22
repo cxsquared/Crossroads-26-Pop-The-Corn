@@ -94,7 +94,16 @@ func _physics_process(delta: float) -> void:
 			z = floor_z
 			sprite.scale = Vector2(floor_scale, floor_scale)
 			_is_falling = false
-			hit_floor.emit(self)
+			if $Score:
+				$Score.show()
+				var s_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+				s_tween.tween_property($Score, "position", $Sprite2D.global_position + Vector2(0, -75), .6).from($Sprite2D.global_position)
+				s_tween.parallel().tween_property($Score, "modulate", Color.TRANSPARENT, 1.6).set_delay(.4)
+				s_tween.tween_callback(func():
+						$Score.queue_free()
+				)
+				s_tween.play()
+				hit_floor.emit(self)
 
 		return
 
@@ -179,7 +188,7 @@ func add_flavor(flavor: Flavor):
 	_flavors.push_back(flavor)
 	popped.connect(flavor._on_popped)
 	flavor.on_added(self)
-	add_child(flavor)
+	sprite.add_child(flavor)
 
 
 func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int = 0, recovery_pop: bool = false):

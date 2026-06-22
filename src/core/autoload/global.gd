@@ -6,6 +6,7 @@ var main: Main
 var hud: Control
 var level: Level
 var current_run: RunState = null
+var default_theme : Theme = preload("res://assets/themes/default_ui_theme.theme")
 
 
 func new_run():

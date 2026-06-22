@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://bnyh7n1wqpby7"]
 
 [ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="1_2d6di"]
-[ext_resource type="Script" uid="uid://dol4ymkelpk1j" path="res://src/gameplay/ui/store_modal.gd" id="2_qtdy1"]
+[ext_resource type="Script" uid="uid://dol4ymkelpk1j" path="res://src/gameplay/ui/shop_modal/store_modal.gd" id="2_qtdy1"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_pkxwf"]
 [ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="3_qtdy1"]
+[ext_resource type="Resource" uid="uid://ddgv7rwj3oxbf" path="res://src/gameplay/flavors/chain_reaction.tres" id="4_3p2ku"]
+[ext_resource type="Resource" uid="uid://b0c8dqy7uxl7x" path="res://src/gameplay/flavors/extra_spawn.tres" id="5_ulfwq"]
+[ext_resource type="Resource" uid="uid://d2njrundj5dh8" path="res://src/gameplay/flavors/nearby_pop.tres" id="6_0eqnd"]
+[ext_resource type="Resource" uid="uid://clu32ple34q3j" path="res://src/gameplay/flavors/pop_after_pops.tres" id="7_x75w1"]
 
 [node name="StoreModal" type="Control" unique_id=1702250470]
 layout_mode = 3
@@ -13,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_qtdy1")
 script = ExtResource("2_qtdy1")
+available_flavors = Array[ExtResource("3_pkxwf")]([ExtResource("4_3p2ku"), ExtResource("5_ulfwq"), ExtResource("6_0eqnd"), ExtResource("7_x75w1")])
 
 [node name="BG" type="NinePatchRect" parent="." unique_id=1473584612]
 layout_mode = 1
@@ -35,19 +41,37 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -70.0
-offset_top = 10.5
+offset_top = -28.125
 offset_right = 68.0
-offset_bottom = 83.5
+offset_bottom = 44.875
 grow_horizontal = 2
 theme = ExtResource("3_qtdy1")
 theme_override_font_sizes/font_size = 60
 text = "Store"
+horizontal_alignment = 1
+
+[node name="Money" type="Label" parent="BG" unique_id=390088517]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = 41.25
+offset_right = 100.0
+offset_bottom = 114.25
+grow_horizontal = 2
+theme = ExtResource("3_qtdy1")
+theme_override_font_sizes/font_size = 32
+text = "You've got $00"
+horizontal_alignment = 1
 
 [node name="Body" type="MarginContainer" parent="BG" unique_id=1924260784]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 32.875
+offset_bottom = 14.875
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_qtdy1")

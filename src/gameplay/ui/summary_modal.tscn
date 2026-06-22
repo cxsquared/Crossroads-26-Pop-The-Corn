@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://b83fxehvnr8h2"]
+
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_kdcfg"]
+[ext_resource type="Script" uid="uid://bvlrk6dk1vupy" path="res://src/gameplay/ui/summary_modal.gd" id="2_racun"]
+[ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="3_h2lgc"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_tc0ke"]
+color = Color(1, 1, 1, 1)
+thickness = 3
+
+[node name="SummaryModal" type="Control" unique_id=1983304998]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kdcfg")
+script = ExtResource("2_racun")
+
+[node name="Bg" type="NinePatchRect" parent="." unique_id=1239516195]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -434.0
+offset_top = -292.0
+offset_right = 434.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_h2lgc")
+
+[node name="title" type="Label" parent="Bg" unique_id=126609600]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.5
+offset_top = 25.0
+offset_right = 116.5
+offset_bottom = 93.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "Nice Work!"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Bg" unique_id=178387526]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 55.0
+offset_top = -123.0
+offset_right = -55.0
+offset_bottom = 195.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Popped" type="HFlowContainer" parent="Bg/VBoxContainer2" unique_id=224184831]
+layout_mode = 2
+theme_override_constants/h_separation = 110
+alignment = 1
+
+[node name="Popped" type="Label" parent="Bg/VBoxContainer2/Popped" unique_id=2030946281]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "Piecies of popcorn popped:"
+
+[node name="PoppedValue" type="Label" parent="Bg/VBoxContainer2/Popped" unique_id=1924352888]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "00"
+
+[node name="Target" type="HFlowContainer" parent="Bg/VBoxContainer2" unique_id=1151866188]
+layout_mode = 2
+theme_override_constants/h_separation = 122
+alignment = 1
+
+[node name="Target" type="Label" parent="Bg/VBoxContainer2/Target" unique_id=2008384479]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "Pieces of popcorn needed:"
+
+[node name="TargetValue" type="Label" parent="Bg/VBoxContainer2/Target" unique_id=321206011]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "00"
+
+[node name="HSeparator" type="HSeparator" parent="Bg/VBoxContainer2" unique_id=662432069]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_tc0ke")
+
+[node name="Money" type="HFlowContainer" parent="Bg/VBoxContainer2" unique_id=277462144]
+layout_mode = 2
+theme_override_constants/h_separation = 351
+alignment = 1
+
+[node name="Target" type="Label" parent="Bg/VBoxContainer2/Money" unique_id=1195866613]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "Money earned:"
+
+[node name="TargetValue" type="Label" parent="Bg/VBoxContainer2/Money" unique_id=1543973782]
+layout_mode = 2
+theme_override_font_sizes/font_size = 53
+text = "$00"

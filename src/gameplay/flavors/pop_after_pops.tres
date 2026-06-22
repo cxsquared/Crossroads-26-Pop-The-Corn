@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FlavorShopData" format=3 uid="uid://clu32ple34q3j"]
+
+[ext_resource type="Script" uid="uid://sv12xboylj5h" path="res://src/gameplay/flavors/pop_after_pops.gd" id="1_a8bd5"]
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="2_1mqjp"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_wmktj"]
+
+[resource]
+script = ExtResource("3_wmktj")
+name = "Red Paper Flakes"
+description = "Causes popcorn to pop itself after 4 other popcorn pop"
+flavor_script = ExtResource("1_a8bd5")
+color_override = Color(0.9908518, 0.08673621, 0, 1)
+metadata/_custom_type_script = "uid://bbkw7wyqip273"

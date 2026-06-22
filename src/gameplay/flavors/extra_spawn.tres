@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FlavorShopData" format=3 uid="uid://b0c8dqy7uxl7x"]
+
+[ext_resource type="Script" uid="uid://dyko5p11ghbsm" path="res://src/gameplay/flavors/extra_spawn.gd" id="1_uhnhs"]
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="2_krqmk"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_gqmym"]
+
+[resource]
+script = ExtResource("3_gqmym")
+name = "Salt"
+description = "Creates 2 pieces of popcorn when popped"
+flavor_script = ExtResource("1_uhnhs")
+color_override = Color(1, 0.9575, 0.85, 1)
+metadata/_custom_type_script = "uid://bbkw7wyqip273"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FlavorShopData" format=3 uid="uid://ddgv7rwj3oxbf"]
+
+[ext_resource type="Script" uid="uid://cqa0qn2penflu" path="res://src/gameplay/flavors/chain_reaction.gd" id="1_iurw6"]
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="1_umbfa"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="2_iurw6"]
+
+[resource]
+script = ExtResource("2_iurw6")
+name = "Cheese Powder"
+description = "Pops nearby popcorn when it lands back in the pan"
+flavor_script = ExtResource("1_iurw6")
+color_override = Color(0.8362387, 0.38566932, 1.92523e-07, 1)
+metadata/_custom_type_script = "uid://bbkw7wyqip273"

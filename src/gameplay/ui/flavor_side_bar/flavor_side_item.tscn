@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://ceda4b23n36dl"]
+
+[ext_resource type="Script" uid="uid://b8ch5lfplocbs" path="res://src/gameplay/ui/flavor_side_bar/flavor_side_item.gd" id="1_hembe"]
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_s8g6c"]
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="1_xv8ai"]
+[ext_resource type="Resource" uid="uid://ddgv7rwj3oxbf" path="res://src/gameplay/flavors/chain_reaction.tres" id="2_2e6u5"]
+
+[node name="FlavorItem" type="Control" unique_id=1441640571]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_s8g6c")
+script = ExtResource("1_hembe")
+flavor_data = ExtResource("2_2e6u5")
+
+[node name="Name" type="Label" parent="." unique_id=750304370]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.5
+offset_right = 41.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "Flavor Name"
+horizontal_alignment = 1
+
+[node name="Picture" type="TextureRect" parent="." unique_id=2117569522]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_xv8ai")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="." unique_id=299222667]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -34.0
+offset_top = -11.0
+offset_right = 6.0
+offset_bottom = 12.0
+grow_horizontal = 0
+text = "1"
+horizontal_alignment = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

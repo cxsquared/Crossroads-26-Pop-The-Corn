@@ -7,8 +7,8 @@ signal on_any_pop(popcorn: Popcorn)
 @export var popcorn_scene: PackedScene = preload("res://src/gameplay/popcorn.tscn")
 
 @export_category("Each Round")
-@export var base_wave_spawn = 30
-@export var initial_spawn_number = 50
+@export var base_wave_spawn = 10
+@export var initial_spawn_number = 25
 @export var score: int = 0
 @export var target = 15
 @export var starting_pop_attempts = 5
@@ -26,6 +26,8 @@ var player_pops_left = 0
 var can_pop = true
 
 @onready var spawnable_area = $Popper/SpawnArea as SpawnArea
+@onready var flavor_side_bar: FlavorSideBar = $LevelHud/FlavorSideBar
+@onready var pops_left_label: Label = $"LevelHud/Pops Left"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -33,18 +35,25 @@ func _ready() -> void:
 	Global.level = self
 	$LevelHud.reparent(Global.hud)
 	player_pops_left = starting_pop_attempts
+	pops_left_label.text = "%d Pops Left" % player_pops_left
 
 	spawn_corn(initial_spawn_number)
 
 
 func reset_pops():
-	var number_to_spawn = ceil(abs(float(base_wave_spawn) / float(Global.current_run.wave) * log(Global.current_run.wave + 1)))
+	var number_to_spawn = Global.current_run.get_current_wave_target() + ceil(abs(float(base_wave_spawn) / float(Global.current_run.wave) * log(Global.current_run.wave + 1)))
 	score = 0
 	score_updated.emit(score)
 	target = Global.current_run.get_current_wave_target()
 	player_pops_left = starting_pop_attempts
+	pops_left_label.text = "%d Pops Left" % player_pops_left
 
 	spawn_corn(number_to_spawn, Global.debug)
+	flavor_side_bar.retract()
+	flavor_side_bar.update_flavor_items()
+
+	if not flavor_side_bar._flavors.is_empty():
+		flavor_side_bar.extend(true)
 
 
 func spawn_corn(amount: int, add_test_flavors = false):
@@ -77,6 +86,42 @@ func spawn_corn(amount: int, add_test_flavors = false):
 
 func get_popcorn_in_level():
 	return popcorns
+
+
+func get_overlaping(pointer: Pointer) -> Array[Popcorn]:
+	var results: Array[Popcorn] = []
+
+	var overlap_query := PhysicsShapeQueryParameters2D.new()
+
+	overlap_query.collide_with_bodies = true
+	overlap_query.transform = pointer.transform
+	overlap_query.shape = pointer.getShape()
+
+	var overlaps = get_world_2d().direct_space_state.intersect_shape(overlap_query)
+
+	for overlap in overlaps:
+		var collider = overlap.collider
+
+		if not collider or collider is not RigidBody2D or not collider.get_collision_layer_value(2) or collider is not Popcorn:
+			# we only care about popcorn aka layer 2
+			continue
+
+		results.push_back(collider as Popcorn)
+
+	return results
+
+
+func get_flavor_from_data(flavor_data: FlavorShopData) -> Flavor:
+	var flavor: Flavor
+
+	if flavor_data.name == "Original Flavor":
+		flavor = flavor_data.flavor_script.new(get_popcorn_in_level)
+	else:
+		flavor = flavor_data.flavor_script.new()
+
+	on_any_pop.connect(flavor._on_any_pop)
+
+	return flavor
 
 
 func _add_test_flavor(new_popcorn: Popcorn):
@@ -157,43 +202,47 @@ func _on_popcorn_collision_enabled(corn: Popcorn, iteration: int = 0):
 		break
 
 
-func _on_pointer_clicked(pointer: Pointer) -> void:
+func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 	if not can_pop:
+		return
+
+	if flavor:
+		var overlapping_corn_for_flavor = get_overlaping(pointer)
+
+		for corn in overlapping_corn_for_flavor:
+			corn.add_flavor(get_flavor_from_data(flavor))
+
 		return
 
 	if player_pops_left <= 0:
 		if score < target:
-			Global.new_run()
-			Global.main.goto_scenep("res://src/gameplay/lobby.tscn", false)
+			Global.main.goto_scenep("res://src/gameplay/game_over.tscn", false)
 		else:
 			can_pop = false
+			Global.current_run.popped = score
+			Global.current_run.previous_target = target
 			Global.current_run.money += score - target
 			Global.main.goto_scenep("res://src/gameplay/lobby.tscn", true)
 		return
 
-	var overlap_query := PhysicsShapeQueryParameters2D.new()
+	var overlapping_corn = get_overlaping(pointer)
+	var hit_corn = not overlapping_corn.is_empty()
 
-	overlap_query.collide_with_bodies = true
-	overlap_query.transform = pointer.transform
-	overlap_query.shape = pointer.getShape()
-
-	var overlaps = get_world_2d().direct_space_state.intersect_shape(overlap_query)
-	var hit_corn = false
-
-	for overlap in overlaps:
-		var collider = overlap.collider
-
-		if not collider or collider is not RigidBody2D or not collider.get_collision_layer_value(2) or collider is not Popcorn:
-			# we only care about popcorn aka layer 2
-			continue
-
-		var corn = collider as Popcorn
+	for corn in overlapping_corn:
 		corn.pop(pointer.global_position)
-		hit_corn = true
 
 	if hit_corn:
 		player_pops_left -= 1
+		pops_left_label.text = "%d Pops Left" % player_pops_left
 
 
 func _on_popped(popcorn: Popcorn, _global_impact_point: Vector2, _number_of_pops_left: int, _iteration: int):
 	on_any_pop.emit(popcorn)
+
+
+func _on_flavor_side_bar_extended() -> void:
+	can_pop = false
+
+
+func _on_flavor_side_bar_retracted() -> void:
+	can_pop = true

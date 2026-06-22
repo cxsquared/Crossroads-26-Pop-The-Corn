@@ -62,4 +62,7 @@ scale = Vector2(0.22222222, 0.22222222)
 sprite_frames = SubResource("SpriteFrames_03jr6")
 frame_progress = 0.76370925
 
+[node name="FlavorSprite" type="Sprite2D" parent="." unique_id=749341958]
+visible = false
+
 [connection signal="timeout" from="ClickCooldown" to="." method="_on_click_cooldown_timeout"]

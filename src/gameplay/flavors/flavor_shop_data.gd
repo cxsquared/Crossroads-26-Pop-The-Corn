@@ -6,9 +6,4 @@ extends Resource
 @export var price: int = 5
 @export var picture: Texture2D = preload("res://assets/textures/flavor_dots.png")
 @export var flavor_script: Script
-
-
-func _init(name, description, flavor_script: Script) -> void:
-	self.name = name
-	self.description = description
-	self.flavor_script = flavor_script
+@export var color_override: Color = Color.WHITE

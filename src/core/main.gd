@@ -181,7 +181,7 @@ func _transition_last_scene():
 		current_scene = _last_scene
 		_show_last_scene()
 
-		_transition("in", func(_anim_name):
+		_transition("in", func(_anim_name_in):
 			if Global.level:
 				Global.level.can_pop = true
 		)

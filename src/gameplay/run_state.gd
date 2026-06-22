@@ -3,6 +3,8 @@ class_name RunState
 var wave: int = 0
 var current_customers: Array[Customer] = []
 var previous_customers: Array[Customer] = []
+var previous_target = 0
+var popped = 0
 var money: int = 0
 var flavors_bought: Array[FlavorShopData] = []
 

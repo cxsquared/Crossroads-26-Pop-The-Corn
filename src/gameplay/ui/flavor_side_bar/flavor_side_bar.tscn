@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bnvlnxmpex5yt"]
+
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_uyrpt"]
+[ext_resource type="Script" uid="uid://b4ii4hy1bggq6" path="res://src/gameplay/ui/flavor_side_bar/flavor_side_bar.gd" id="2_yxnxh"]
+[ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="3_8p1ik"]
+
+[node name="FlavorSideBar" type="Control" unique_id=145838916]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -155.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_uyrpt")
+script = ExtResource("2_yxnxh")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=842555160]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -320.0
+offset_bottom = 320.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("3_8p1ik")
+region_rect = Rect2(38.390617, 43.351563, 621.94525, 381.44528)
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect" unique_id=24557347]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 25
+
+[node name="FlavorContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer" unique_id=1450507472]
+layout_mode = 2
+theme_override_constants/separation = 45
+
+[node name="HideTimer" type="Timer" parent="." unique_id=1010047195]
+wait_time = 0.2
+
+[node name="AutoHide" type="Timer" parent="." unique_id=325817774]
+wait_time = 3.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]
+[connection signal="timeout" from="AutoHide" to="." method="_on_auto_hide_timeout"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FlavorShopData" format=3 uid="uid://d2njrundj5dh8"]
+
+[ext_resource type="Script" uid="uid://bnvt1vuf5853q" path="res://src/gameplay/flavors/nearby_pop.gd" id="1_nk8b0"]
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="2_bbpya"]
+[ext_resource type="Script" uid="uid://bbkw7wyqip273" path="res://src/gameplay/flavors/flavor_shop_data.gd" id="3_i7qsj"]
+
+[resource]
+script = ExtResource("3_i7qsj")
+name = "Original Flavor"
+description = "Pops other nearby popcorn when popped"
+flavor_script = ExtResource("1_nk8b0")
+color_override = Color(1, 0.7833333, 0, 1)
+metadata/_custom_type_script = "uid://bbkw7wyqip273"

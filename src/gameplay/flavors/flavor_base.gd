@@ -2,12 +2,7 @@
 class_name Flavor
 extends Sprite2D
 
-static var all_flavors_shop_data: Array[FlavorShopData] = [
-	FlavorShopData.new("Cheese Powder", "Pops nearby popcorn when it lands back in the pan", ChainReaction),
-	FlavorShopData.new("Salt", "Creates 2 pieces of popcorn when popped", ExtraSpawn),
-	FlavorShopData.new("Original Flavor", "Pops other nearby popcorn when popped", NearbyPop),
-	FlavorShopData.new("Red Paper Flakes", "Causes popcorn to pop itself after 4 other popcorn pop", PopAfterPops)
-]
+
 
 # What to show on popcorn
 @export var decoration: Texture2D = preload("res://assets/textures/flavor_dots.png")

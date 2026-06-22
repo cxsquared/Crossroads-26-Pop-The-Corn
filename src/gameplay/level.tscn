@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bolhu16cbqk8" path="res://src/gameplay/level.gd" id="1_5kcgd"]
 [ext_resource type="Texture2D" uid="uid://57mniub8e1b4" path="res://assets/textures/background.png" id="1_ouqds"]
 [ext_resource type="PackedScene" uid="uid://bvkvlaav73jvp" path="res://src/gameplay/popper.tscn" id="3_ouqds"]
-[ext_resource type="Script" uid="uid://y6brkvt3g2u0" path="res://src/gameplay/ui/score.gd" id="4_xsmr6"]
 [ext_resource type="PackedScene" uid="uid://qef4jcw6sord" path="res://src/gameplay/pointer.tscn" id="5_5kcgd"]
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="5_ygvoh"]
+[ext_resource type="PackedScene" uid="uid://bnvlnxmpex5yt" path="res://src/gameplay/ui/flavor_side_bar/flavor_side_bar.tscn" id="6_46ygg"]
+[ext_resource type="Script" uid="uid://dpc30adq0b4vb" path="res://src/gameplay/pop_info.gd" id="8_rldb5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ouqds"]
 size = Vector2(1290, 442)
@@ -12,14 +14,26 @@ size = Vector2(1290, 442)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsmr6"]
 size = Vector2(541, 602.75)
 
-[sub_resource type="LabelSettings" id="LabelSettings_xsmr6"]
-font_size = 64
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="GDScript" id="GDScript_ygvoh"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_on_level_score_updated(0)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+
+
+func _on_level_score_updated(new_score: int) -> void:
+	text = \"You still need %d popcorns popped\" % max(0, Global.current_run.get_current_wave_target() - new_score)
+"
 
 [node name="Level" type="Node2D" unique_id=1590050416]
 script = ExtResource("1_5kcgd")
-number_to_spawn = 50
 target = 10
 floor_z = -50
 pop_radius = 100.0
@@ -65,18 +79,76 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Score" type="Label" parent="LevelHud" unique_id=1804296246]
+[node name="FlavorSideBar" parent="LevelHud" unique_id=145838916 instance=ExtResource("6_46ygg")]
+layout_mode = 1
+
+[node name="Pops Left" type="Label" parent="LevelHud" unique_id=1382879028]
+layout_mode = 1
+offset_left = 76.0
+offset_top = 4.0
+offset_right = 296.0
+offset_bottom = 61.0
+theme = ExtResource("5_ygvoh")
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 46
+text = "0 Pops Left"
+horizontal_alignment = 1
+script = SubResource("GDScript_ygvoh")
+
+[node name="PopInfo" type="Control" parent="LevelHud" unique_id=128598999]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -122.0
+offset_right = 20.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("8_rldb5")
+
+[node name="Score" type="Label" parent="LevelHud/PopInfo" unique_id=1804296246]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 88.0
+offset_left = -183.5
+offset_top = -12.0
+offset_right = 183.5
+offset_bottom = 56.0
 grow_horizontal = 2
-text = "0"
-label_settings = SubResource("LabelSettings_xsmr6")
-script = ExtResource("4_xsmr6")
+theme = ExtResource("5_ygvoh")
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 56
+text = "0 Pieces Popped"
+horizontal_alignment = 1
 
-[connection signal="score_updated" from="." to="LevelHud/Score" method="_on_level_score_updated"]
+[node name="Target" type="Label" parent="LevelHud/PopInfo" unique_id=1153425913]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -119.5
+offset_top = 9.0
+offset_right = 119.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_ygvoh")
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 46
+text = "0 left to pop"
+horizontal_alignment = 1
+
+[connection signal="score_updated" from="." to="LevelHud/PopInfo" method="_on_level_score_updated"]
 [connection signal="clicked" from="Pointer" to="." method="_on_pointer_clicked"]
+[connection signal="extended" from="LevelHud/FlavorSideBar" to="." method="_on_flavor_side_bar_extended"]
+[connection signal="extended" from="LevelHud/FlavorSideBar" to="Pointer" method="_on_flavor_side_bar_extended"]
+[connection signal="flavor_item_clicked" from="LevelHud/FlavorSideBar" to="Pointer" method="_on_flavor_side_bar_flavor_item_clicked"]
+[connection signal="retracted" from="LevelHud/FlavorSideBar" to="." method="_on_flavor_side_bar_retracted"]
+[connection signal="retracted" from="LevelHud/FlavorSideBar" to="Pointer" method="_on_flavor_side_bar_retracted"]

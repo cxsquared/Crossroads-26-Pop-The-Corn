@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cyype3fkfikni"]
+
+[ext_resource type="Script" uid="uid://c1nhoeql4ehri" path="res://src/gameplay/game_over.gd" id="1_8naoi"]
+[ext_resource type="PackedScene" uid="uid://c17c44rmxth" path="res://src/gameplay/ui/game_over.tscn" id="2_t7mms"]
+
+[node name="GameOver" type="Node2D" unique_id=845987664]
+script = ExtResource("1_8naoi")
+
+[node name="Ui" parent="." unique_id=884578637 instance=ExtResource("2_t7mms")]

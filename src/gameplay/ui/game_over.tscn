@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c17c44rmxth"]
+
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_2n766"]
+[ext_resource type="Texture2D" uid="uid://cqvielml1btbk" path="res://assets/textures/lobby.png" id="2_0kdbi"]
+[ext_resource type="Script" uid="uid://cx4b8jo2fopqs" path="res://src/gameplay/ui/game_over.gd" id="2_f5ni0"]
+
+[node name="GameOverUi" type="Control" unique_id=884578637]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2n766")
+script = ExtResource("2_f5ni0")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=485869420]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_0kdbi")
+
+[node name="Label" type="Label" parent="." unique_id=2038726512]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -484.5
+offset_right = 484.5
+offset_bottom = 252.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 209
+text = "Game Over"
+
+[node name="Label2" type="Label" parent="." unique_id=2056643959]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -51.5
+offset_right = 448.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 85
+text = "You served 00 customers"
+
+[node name="Label3" type="Label" parent="." unique_id=2048174076]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -448.0
+offset_top = -103.0
+offset_right = 448.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 85
+text = "Click to try again"
+horizontal_alignment = 1
