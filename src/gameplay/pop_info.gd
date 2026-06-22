@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 
 
 func _on_level_score_updated(new_score: int) -> void:
-	score.text = "%d peices popped" % new_score
+	score.text = "%d pieces popped" % new_score
 	var peices_to_go = max(0, Global.current_run.get_current_wave_target() - new_score)
 	if peices_to_go > 0:
 		target.text = "%d popcorn pieces to go" % max(0, Global.current_run.get_current_wave_target() - new_score)
