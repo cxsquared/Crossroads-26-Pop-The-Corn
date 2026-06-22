@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwmhixliuiiqq" path="res://src/debug/debug_text_overlay.tscn" id="1_avv2o"]
 [ext_resource type="Script" uid="uid://cd6b1svqolqxt" path="res://src/core/main.gd" id="1_ukt3u"]
-[ext_resource type="PackedScene" uid="uid://caqc14m1jlq38" path="res://src/gameplay/lobby.tscn" id="2_ivtyw"]
+[ext_resource type="PackedScene" uid="uid://cmx25hppl08hm" path="res://src/gameplay/main_menu/main_menu.tscn" id="2_ivtyw"]
 
 [node name="Main" type="Node" unique_id=427628392]
 script = ExtResource("1_ukt3u")

@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://dr1jithynbux5"]
+
+[ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_w5t00"]
+[ext_resource type="Texture2D" uid="uid://cqvielml1btbk" path="res://assets/textures/lobby.png" id="2_8n07w"]
+[ext_resource type="PackedScene" uid="uid://cgxpgc5a1xolj" path="res://src/gameplay/ui/ticker.tscn" id="2_kpv51"]
+[ext_resource type="Script" uid="uid://cf6ng4lb6hjhl" path="res://src/gameplay/ui/ticker_message.gd" id="3_3i72r"]
+[ext_resource type="Script" uid="uid://dvokwqtywvf5f" path="res://src/core/title.gd" id="3_8n07w"]
+
+[sub_resource type="Resource" id="Resource_ajr3l"]
+script = ExtResource("3_3i72r")
+message = "A Plate o' Cheese Game"
+trailing_padding = 256
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_eh5by"]
+script = ExtResource("3_3i72r")
+message = "Made By:"
+trailing_padding = 32
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_dcn5p"]
+script = ExtResource("3_3i72r")
+message = "Cody Claborn @cxsquared"
+trailing_padding = 128
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_pu7mb"]
+script = ExtResource("3_3i72r")
+message = "Font by:"
+trailing_padding = 32
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_qb7m0"]
+script = ExtResource("3_3i72r")
+message = "https://vinizinho.itch.io"
+trailing_padding = 256
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_580ka"]
+script = ExtResource("3_3i72r")
+message = "More Jam Games at: https://itch.io/jam/crossroads-game-jam-2026"
+trailing_padding = 640
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[sub_resource type="Resource" id="Resource_u24ot"]
+script = ExtResource("3_3i72r")
+message = "No Gen Ai was used to create this game"
+metadata/_custom_type_script = "uid://cf6ng4lb6hjhl"
+
+[node name="MainMenuUi" type="Control" unique_id=1273338077]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_w5t00")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=182359770]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_8n07w")
+
+[node name="Label2" type="Label" parent="." unique_id=1316764706]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -415.0
+offset_top = -153.0
+offset_right = 481.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.45999998, 0.45999998, 1)
+theme_override_font_sizes/font_size = 61
+text = "Made for Crossroads Jam 2026"
+
+[node name="Title" type="Control" parent="." unique_id=1108957788]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("3_8n07w")
+
+[node name="LabelParent" type="Control" parent="Title" unique_id=1602086058]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 102.0
+offset_right = 20.0
+offset_bottom = 142.0
+grow_horizontal = 2
+
+[node name="Label" type="Label" parent="Title/LabelParent" unique_id=878224325]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -569.0
+offset_top = -126.0
+offset_right = 569.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.99016666, 1, 0.41000003, 1)
+theme_override_font_sizes/font_size = 209
+text = "Pop the Corn"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="." unique_id=224628946]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -448.0
+offset_top = -139.0
+offset_right = 448.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 85
+text = "Click to start"
+horizontal_alignment = 1
+
+[node name="Credits" parent="." unique_id=734824123 instance=ExtResource("2_kpv51")]
+layout_mode = 1
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+messages = Array[ExtResource("3_3i72r")]([SubResource("Resource_ajr3l"), SubResource("Resource_eh5by"), SubResource("Resource_dcn5p"), SubResource("Resource_pu7mb"), SubResource("Resource_qb7m0"), SubResource("Resource_580ka"), SubResource("Resource_u24ot")])
+hide_time = 3.0

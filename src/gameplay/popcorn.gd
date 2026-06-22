@@ -1,7 +1,7 @@
 class_name Popcorn
 extends RigidBody2D
 
-signal landed(landed_popcorn:Popcorn, position: Vector2, pops_left: int, iteration: int)
+signal landed(landed_popcorn: Popcorn, position: Vector2, pops_left: int, iteration: int)
 signal collision_enabled(popcorn: Popcorn)
 signal hit_floor(popcorn: Popcorn)
 signal popped(popcorn: Popcorn, global_impact_point: Vector2, number_of_pops_left: int, iteration: int)
@@ -212,7 +212,7 @@ func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int 
 		adjusted_z_impulse = adjusted_z_impulse * .3
 		pop_force = pop_force * .5
 
-	z_velocity += adjusted_z_impulse * remap(min(iteration, 4), 0, 4, 1, .3)
+	z_velocity += adjusted_z_impulse * remap(min(iteration, 4), 0, 4, 1, .5)
 	z = 1
 
 	has_popped = true

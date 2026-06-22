@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://bg8jeyq6awtin" path="res://assets/themes/default_ui_theme.theme" id="1_kdcfg"]
 [ext_resource type="Script" uid="uid://bvlrk6dk1vupy" path="res://src/gameplay/ui/summary_modal.gd" id="2_racun"]
 [ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="3_h2lgc"]
+[ext_resource type="FontFile" uid="uid://bpuxcyk7csghl" path="res://assets/fonts/vinizinho.ttf" id="4_racun"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_tc0ke"]
 color = Color(1, 1, 1, 1)
@@ -72,6 +73,7 @@ text = "Piecies of popcorn popped:"
 
 [node name="PoppedValue" type="Label" parent="Bg/VBoxContainer2/Popped" unique_id=1924352888]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_racun")
 theme_override_font_sizes/font_size = 53
 text = "00"
 
@@ -87,6 +89,7 @@ text = "Pieces of popcorn needed:"
 
 [node name="TargetValue" type="Label" parent="Bg/VBoxContainer2/Target" unique_id=321206011]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_racun")
 theme_override_font_sizes/font_size = 53
 text = "00"
 
@@ -106,5 +109,6 @@ text = "Money earned:"
 
 [node name="TargetValue" type="Label" parent="Bg/VBoxContainer2/Money" unique_id=1543973782]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_racun")
 theme_override_font_sizes/font_size = 53
 text = "$00"

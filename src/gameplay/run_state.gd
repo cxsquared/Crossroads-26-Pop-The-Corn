@@ -3,15 +3,18 @@ class_name RunState
 var wave: int = 0
 var current_customers: Array[Customer] = []
 var previous_customers: Array[Customer] = []
+var target_offeset: int = 0
 var previous_target = 0
 var popped = 0
 var money: int = 0
 var flavors_bought: Array[FlavorShopData] = []
+var upgrades_bought: Dictionary[String, UpgradeData] = {}
 
 
 func next_wave():
 	wave += 1
 	previous_customers = previous_customers + current_customers
+	target_offeset = 0
 	current_customers.clear()
 
 	match wave:
@@ -32,7 +35,7 @@ func next_wave():
 
 
 func get_current_wave_target() -> int:
-	return current_customers.reduce(func(total, customer): return total + customer.popcorn_needed, 0)
+	return current_customers.reduce(func(total, customer): return total + customer.popcorn_needed, 0) + target_offeset
 
 
 class Customer:

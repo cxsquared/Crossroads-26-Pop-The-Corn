@@ -1,11 +1,14 @@
 class_name ShopTile
 extends NinePatchRect
 
-signal bought(flavor: FlavorShopData, price: int)
+signal bought_flavor(flavor: FlavorShopData, price: int)
+signal bought_upgrade(upgrade: UpgradeData, price: int)
 
 @export var flavor: FlavorShopData:
 	set(new_flavor):
 		flavor = new_flavor
+
+@export var upgrade: UpgradeData
 
 var on_sale = false
 var price: int = 0
@@ -37,17 +40,33 @@ func enable():
 
 
 func update_tile():
-	name_label.text = flavor.name
-	description_label.text = flavor.description
-	price = flavor.price
-	if on_sale:
-		price = floor(price * .5)
+	if flavor:
+		name_label.text = flavor.name
+		description_label.text = flavor.description
+		price = flavor.price
+		if on_sale:
+			price = floor(price * .5)
 
-	price_label.text = "$%d" % price
-	picture_rect.texture = flavor.picture
+		price_label.text = "$%d" % price
+		picture_rect.texture = flavor.picture
+		picture_rect.show()
+
+	if upgrade:
+		name_label.text = upgrade.name
+		description_label.text = upgrade.description
+		price = upgrade.price
+		if on_sale:
+			price = floor(price * .6)
+
+		price_label.text = "$%d" % price
+		picture_rect.hide()
 
 
 func _on_buy_pressed() -> void:
 	$Bougth.show()
 	disable()
-	bought.emit(flavor, price)
+	if flavor:
+		bought_flavor.emit(flavor, price)
+		
+	if upgrade:
+		bought_upgrade.emit(upgrade, price)

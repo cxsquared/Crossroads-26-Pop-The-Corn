@@ -72,3 +72,5 @@ fp-info-cache
 
 # PCB way plugin
 *.kicad_pcb.zip
+
+/build

@@ -1,6 +1,6 @@
 extends Node
 
-@export var debug = true
+@export var debug = false
 
 var main: Main
 var hud: Control
@@ -10,8 +10,9 @@ var default_theme: Theme = preload("res://assets/themes/default_ui_theme.theme")
 
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("debug"):
-		debug = !debug
+	pass
+	#if Input.is_action_just_pressed("debug"):
+		#debug = !debug
 
 
 func new_run():

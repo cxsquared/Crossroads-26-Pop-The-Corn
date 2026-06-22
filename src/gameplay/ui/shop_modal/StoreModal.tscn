@@ -8,6 +8,12 @@
 [ext_resource type="Resource" uid="uid://b0c8dqy7uxl7x" path="res://src/gameplay/flavors/extra_spawn.tres" id="5_ulfwq"]
 [ext_resource type="Resource" uid="uid://d2njrundj5dh8" path="res://src/gameplay/flavors/nearby_pop.tres" id="6_0eqnd"]
 [ext_resource type="Resource" uid="uid://clu32ple34q3j" path="res://src/gameplay/flavors/pop_after_pops.tres" id="7_x75w1"]
+[ext_resource type="Script" uid="uid://bm4n5v4idih8y" path="res://src/gameplay/upgrades/upgrade_data.gd" id="8_cmffi"]
+[ext_resource type="Resource" uid="uid://cdvctv3ytsuf" path="res://src/gameplay/upgrades/delivery.tres" id="9_g11rt"]
+[ext_resource type="Resource" uid="uid://d1g3yl81kxi0q" path="res://src/gameplay/upgrades/extra_pop.tres" id="10_1ubka"]
+[ext_resource type="Resource" uid="uid://cv1lal6ud31k6" path="res://src/gameplay/upgrades/left_overs.tres" id="11_7yeeu"]
+[ext_resource type="Resource" uid="uid://bhelrlpamfjlc" path="res://src/gameplay/upgrades/radius_increase.tres" id="12_l44yn"]
+[ext_resource type="FontFile" uid="uid://bpuxcyk7csghl" path="res://assets/fonts/vinizinho.ttf" id="14_g11rt"]
 
 [node name="StoreModal" type="Control" unique_id=1702250470]
 layout_mode = 3
@@ -19,6 +25,7 @@ grow_vertical = 2
 theme = ExtResource("3_qtdy1")
 script = ExtResource("2_qtdy1")
 available_flavors = Array[ExtResource("3_pkxwf")]([ExtResource("4_3p2ku"), ExtResource("5_ulfwq"), ExtResource("6_0eqnd"), ExtResource("7_x75w1")])
+available_upgrades = Array[ExtResource("8_cmffi")]([ExtResource("9_g11rt"), ExtResource("10_1ubka"), ExtResource("11_7yeeu"), ExtResource("12_l44yn")])
 
 [node name="BG" type="NinePatchRect" parent="." unique_id=1473584612]
 layout_mode = 1
@@ -61,8 +68,9 @@ offset_right = 100.0
 offset_bottom = 114.25
 grow_horizontal = 2
 theme = ExtResource("3_qtdy1")
+theme_override_fonts/font = ExtResource("14_g11rt")
 theme_override_font_sizes/font_size = 32
-text = "You've got $00"
+text = "You have $00 left"
 horizontal_alignment = 1
 
 [node name="Body" type="MarginContainer" parent="BG" unique_id=1924260784]

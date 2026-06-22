@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://coxy3hyldn7ba" path="res://assets/textures/ui/ui_bg.png" id="2_pf4fo"]
 [ext_resource type="Script" uid="uid://chvltdwdwrm88" path="res://src/gameplay/ui/shop_modal/shop_tile.gd" id="3_q4p53"]
 [ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="4_btirs"]
+[ext_resource type="FontFile" uid="uid://bpuxcyk7csghl" path="res://assets/fonts/vinizinho.ttf" id="4_u6g33"]
 
 [sub_resource type="Theme" id="Theme_yn73a"]
 
@@ -52,13 +53,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -3.5
-offset_top = -101.0
-offset_right = 68.5
-offset_bottom = -3.0
+offset_left = -15.5
+offset_top = -82.0
+offset_right = 56.5
+offset_bottom = 16.0
 grow_horizontal = 0
 rotation = 0.53407073
 pivot_offset = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("4_u6g33")
 theme_override_font_sizes/font_size = 71
 text = "5$"
 horizontal_alignment = 1
@@ -90,6 +92,8 @@ theme_override_constants/margin_bottom = 0
 [node name="Description" type="Label" parent="Margin/Body/HBoxContainer/MarginContainer" unique_id=878727956]
 custom_minimum_size = Vector2(118, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_u6g33")
+theme_override_font_sizes/font_size = 18
 text = "This is a cool item that should auto wrap"
 vertical_alignment = 1
 autowrap_mode = 2

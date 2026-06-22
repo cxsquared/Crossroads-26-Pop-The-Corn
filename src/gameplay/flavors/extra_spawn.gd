@@ -17,8 +17,8 @@ func _on_popped(og_popcorn: Popcorn, global_impact_point: Vector2, number_of_pop
 	var new_corn = popcorn_scene.instantiate() as Popcorn
 	new_corn.position = og_popcorn.position + og_popcorn.global_position.direction_to(global_impact_point) * 2
 	new_corn.name = "%s-%s-ExtraCorn" % [og_popcorn.name, name]
-	new_corn.landed.connect(func(landed_position: Vector2, landed_pops_left: int, landed_iteration: int):
-			og_popcorn.landed.emit(landed_position, landed_pops_left, landed_iteration)
+	new_corn.landed.connect(func(landed_popcorn:Popcorn, landed_position: Vector2, landed_pops_left: int, landed_iteration: int):
+			og_popcorn.landed.emit(landed_popcorn, landed_position, landed_pops_left, landed_iteration)
 	)
 	new_corn.floor_z = og_popcorn.floor_z
 	new_corn.collision_enabled.connect(func(collision_enabled_corn: Popcorn):

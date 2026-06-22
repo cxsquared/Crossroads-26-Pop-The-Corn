@@ -92,6 +92,7 @@ func goto_scene(scene: PackedScene, save_current_scene: bool = false):
 
 
 func go_to_last_scene():
+	_check_existing_scene_change()
 	assert(_last_scene, "Last scene doesn't exist")
 	_deferred_scene = true
 	_should_save_current_scene = false
@@ -155,6 +156,7 @@ func _save_current_scene():
 func _transition_to_new_scene(scene: PackedScene):
 	_transition("out", func(_anim_name):
 		if _should_save_current_scene:
+			assert(Global.level or current_scene == Global.level, "Not saving level scene")
 			_should_save_current_scene = false
 			_save_current_scene()
 			_hide_last_scene()

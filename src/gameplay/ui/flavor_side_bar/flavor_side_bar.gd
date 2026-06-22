@@ -32,9 +32,6 @@ func _process(_delta: float) -> void:
 
 
 func update_flavor_items():
-	if Global.current_run.flavors_bought.is_empty():
-		return
-
 	while not Global.current_run.flavors_bought.is_empty():
 		var flavor: FlavorShopData = Global.current_run.flavors_bought.pop_back()
 

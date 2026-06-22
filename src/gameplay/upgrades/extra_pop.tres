@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeData" format=3 uid="uid://d1g3yl81kxi0q"]
+
+[ext_resource type="Texture2D" uid="uid://c7yh8qttuk3gs" path="res://assets/textures/flavor_dots.png" id="1_tcplt"]
+[ext_resource type="Script" uid="uid://bm4n5v4idih8y" path="res://src/gameplay/upgrades/upgrade_data.gd" id="2_ew12u"]
+
+[resource]
+script = ExtResource("2_ew12u")
+name = "Overtime"
+description = "You get +1 pops next round"
+metadata/_custom_type_script = "uid://bm4n5v4idih8y"

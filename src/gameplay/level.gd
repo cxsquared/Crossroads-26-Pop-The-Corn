@@ -28,12 +28,14 @@ var can_pop = true
 @onready var spawnable_area = $Popper/SpawnArea as SpawnArea
 @onready var flavor_side_bar: FlavorSideBar = $LevelHud/FlavorSideBar
 @onready var pops_left_label: Label = $"LevelHud/Pops Left"
+@onready var hud = $LevelHud
+@onready var pointer: Pointer = $Pointer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.level = self
-	$LevelHud.reparent(Global.hud)
+	hud.reparent(Global.hud)
 	player_pops_left = starting_pop_attempts
 	pops_left_label.text = "%d Pops Left" % player_pops_left
 
@@ -46,8 +48,20 @@ func reset_pops():
 	score_updated.emit(score)
 	target = Global.current_run.get_current_wave_target()
 	player_pops_left = starting_pop_attempts
-	pops_left_label.text = "%d Pops Left" % player_pops_left
 
+	if Global.current_run.upgrades_bought.has("Special Delivery"):
+		Global.current_run.upgrades_bought.erase("Special Delivery")
+		number_to_spawn += 10
+
+	if Global.current_run.upgrades_bought.has("Overtime"):
+		Global.current_run.upgrades_bought.erase("Overtime")
+		player_pops_left += 1
+
+	if Global.current_run.upgrades_bought.has("A Raise"):
+		Global.current_run.upgrades_bought.erase("A Raise")
+		pointer.radius += 10
+
+	pops_left_label.text = "%d Pops Left" % player_pops_left
 	spawn_corn(number_to_spawn, Global.debug)
 	flavor_side_bar.retract()
 	flavor_side_bar.update_flavor_items()
@@ -216,7 +230,7 @@ func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 
 	if player_pops_left <= 0:
 		if score < target:
-			Global.main.goto_scenep("res://src/gameplay/game_over.tscn", false)
+			Global.main.goto_scenep("res://src/gameplay/game_over/game_over.tscn", false)
 		else:
 			can_pop = false
 			Global.current_run.popped = score

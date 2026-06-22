@@ -37,6 +37,7 @@ visible = false
 layout_mode = 1
 
 [node name="SummaryModal" parent="LobbyUi" unique_id=1983304998 instance=ExtResource("6_xiq1g")]
+visible = false
 layout_mode = 1
 
 [node name="PiecesNeeded" type="Label" parent="LobbyUi" unique_id=2130730558]
@@ -53,6 +54,16 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 73
 text = "You need 0 Popcorn Pieces"
 horizontal_alignment = 1
+
+[node name="TargetMod" type="Label" parent="LobbyUi/PiecesNeeded" unique_id=175040519]
+visible = false
+layout_mode = 0
+offset_left = 274.5
+offset_top = -4.0
+offset_right = 333.5
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 75
+text = "-5"
 
 [node name="Continue" type="Label" parent="LobbyUi" unique_id=195825343]
 visible = false
