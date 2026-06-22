@@ -9,10 +9,10 @@
 [ext_resource type="Script" uid="uid://dpc30adq0b4vb" path="res://src/gameplay/pop_info.gd" id="8_rldb5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ouqds"]
-size = Vector2(1290, 442)
+size = Vector2(1290, 917)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsmr6"]
-size = Vector2(541, 602.75)
+size = Vector2(1328.5, 2270)
 
 [sub_resource type="GDScript" id="GDScript_ygvoh"]
 script/source = "extends Label
@@ -47,19 +47,19 @@ texture = ExtResource("1_ouqds")
 centered = false
 
 [node name="Top" type="CollisionShape2D" parent="Background" unique_id=2010670698]
-position = Vector2(642, -136)
+position = Vector2(647, -359)
 shape = SubResource("RectangleShape2D_ouqds")
 
 [node name="Bottom" type="CollisionShape2D" parent="Background" unique_id=570870690]
-position = Vector2(635, 846)
+position = Vector2(635, 1076)
 shape = SubResource("RectangleShape2D_ouqds")
 
 [node name="Right" type="CollisionShape2D" parent="Background" unique_id=1638159245]
-position = Vector2(1457, 361)
+position = Vector2(1851, 367)
 shape = SubResource("RectangleShape2D_xsmr6")
 
 [node name="Left" type="CollisionShape2D" parent="Background" unique_id=724619291]
-position = Vector2(-170, 368)
+position = Vector2(-567, 402)
 shape = SubResource("RectangleShape2D_xsmr6")
 
 [node name="Popper" parent="." unique_id=685319485 instance=ExtResource("3_ouqds")]

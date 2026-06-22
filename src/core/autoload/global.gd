@@ -1,12 +1,17 @@
 extends Node
 
-@export var debug = false
+@export var debug = true
 
 var main: Main
 var hud: Control
 var level: Level
 var current_run: RunState = null
-var default_theme : Theme = preload("res://assets/themes/default_ui_theme.theme")
+var default_theme: Theme = preload("res://assets/themes/default_ui_theme.theme")
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("debug"):
+		debug = !debug
 
 
 func new_run():

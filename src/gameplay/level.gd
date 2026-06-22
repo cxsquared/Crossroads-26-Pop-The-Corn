@@ -37,7 +37,7 @@ func _ready() -> void:
 	player_pops_left = starting_pop_attempts
 	pops_left_label.text = "%d Pops Left" % player_pops_left
 
-	spawn_corn(initial_spawn_number)
+	spawn_corn(initial_spawn_number, Global.debug)
 
 
 func reset_pops():
@@ -130,7 +130,7 @@ func _add_test_flavor(new_popcorn: Popcorn):
 		if Global.rand_bool(5):
 			if Global.rand_bool(2):
 				flavors.push_back(ExtraSpawn.new())
-			if Global.rand_bool(2):
+			if Global.rand_bool(1):
 				flavors.push_back(ChainReaction.new())
 			if Global.rand_bool(2):
 				flavors.push_back(NearbyPop.new(func():
@@ -156,10 +156,10 @@ func _add_test_flavor(new_popcorn: Popcorn):
 			new_popcorn.add_flavor(flavor)
 
 
-func _on_landed(corn_position: Vector2, pops_left: int, iteration: int):
+func _on_landed(landed_corn: Popcorn, corn_position: Vector2, pops_left: int, iteration: int):
 	if pops_left > 0:
 		for corn in popcorns:
-			if corn_position.distance_to(corn.global_position) <= pop_radius:
+			if corn != landed_corn and corn_position.distance_to(corn.global_position) <= pop_radius:
 				corn.pop(corn_position, pops_left - 1, iteration)
 
 

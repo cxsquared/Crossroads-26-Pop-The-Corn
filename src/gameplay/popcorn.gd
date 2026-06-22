@@ -1,7 +1,7 @@
 class_name Popcorn
 extends RigidBody2D
 
-signal landed(position: Vector2, pops_left: int, iteration: int)
+signal landed(landed_popcorn:Popcorn, position: Vector2, pops_left: int, iteration: int)
 signal collision_enabled(popcorn: Popcorn)
 signal hit_floor(popcorn: Popcorn)
 signal popped(popcorn: Popcorn, global_impact_point: Vector2, number_of_pops_left: int, iteration: int)
@@ -31,6 +31,7 @@ var air_velocity = Vector2.ZERO
 
 var _can_post_pop = false
 var _is_falling = false
+var _has_fallen = false
 var _in_air = false
 var _number_of_pops_left: int = 0
 var _iteration: int = 0
@@ -41,6 +42,7 @@ var _flavors: Array[Flavor]
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var popped_collider = $Popped
 @onready var unpopped_collider = $Unpopped
+@onready var score_label: Label = $Score
 
 
 # Called when the node enters the scene tree for the first time.
@@ -58,12 +60,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if z <= floor_z:
-		if not get_viewport_rect().has_point(global_position):
-			global_position.y = -64
-			z = floor_z * .5
+	sprite.global_position = global_position
+	sprite.rotation = rotation
 
-	if z >= 1 or _is_falling:
+	if $Shadow.visible:
+		$Shadow.global_position = global_position + _shadown_diff
+		$Shadow.rotation = -rotation
+
+	if z >= floor_z:
 		var sprite_y = -z
 		var sprite_scale = remap(z, floor_z, max_height, floor_scale, max_scale)
 
@@ -76,43 +80,26 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	sprite.global_position = global_position
-	sprite.rotation = rotation
-
-	if z <= floor_z:
-		return
-
-	if $Shadow.visible:
-		pass
-		$Shadow.global_position = global_position + _shadown_diff
-		$Shadow.rotation = -rotation
-
 	if _is_falling:
-		z -= gravity * delta
-		# check if we are off the level
-		if z < floor_z:
-			z = floor_z
-			sprite.scale = Vector2(floor_scale, floor_scale)
-			_is_falling = false
-			if $Score:
-				$Score.show()
-				var s_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-				s_tween.tween_property($Score, "position", $Sprite2D.global_position + Vector2(0, -75), .6).from($Sprite2D.global_position)
-				s_tween.parallel().tween_property($Score, "modulate", Color.TRANSPARENT, 1.6).set_delay(.4)
-				s_tween.tween_callback(func():
-						$Score.queue_free()
-				)
-				s_tween.play()
-				hit_floor.emit(self)
-
+		_handle_falling(delta)
 		return
 
-	if z < 1 and _in_air:
+	# Fix issue if we go down to fast
+	if _in_air and not _has_fallen and z < 1:
 		land()
-	elif z >= 1:
-		z += z_velocity
-		z_velocity = max(z_velocity * z_friction, .5)
-		z -= gravity * delta
+		return
+
+	if _has_fallen:
+		z = floor_z
+		z_velocity = 0
+		_is_falling = false
+		_in_air = false
+		return
+
+	z += z_velocity
+	z_velocity = max(z_velocity * z_friction, 0)
+	if z >= 1:
+		z = max(z - gravity * delta, 0)
 
 	if z > collision_height:
 		disable_collision()
@@ -145,16 +132,26 @@ func disable_collision():
 
 
 func land():
+	# Reset z physics
 	z = 0
-	sprite.position = Vector2(0, 0)
-	enable_collision()
-	landed.emit(global_position, _number_of_pops_left, _iteration + 1)
+	z_velocity = 0
+
+	# we probably already landed
+	if not _in_air:
+		return
+
 	_in_air = false
+
+	# Reset graphics
+	sprite.position = Vector2(0, 0)
 	var sprite_scale = remap(0, floor_z, max_height, floor_scale, max_scale)
 	sprite.scale = Vector2(sprite_scale, sprite_scale)
 	sprite.z_index = 0
-
 	$Shadow.hide()
+
+	# Enable collision and let people know we landed
+	enable_collision()
+	landed.emit(self, global_position, _number_of_pops_left, _iteration + 1)
 
 
 func get_active_shape() -> Shape2D:
@@ -180,7 +177,7 @@ func post_pop_pop(hitter_speed: float):
 		return
 
 	z_velocity += z_impulse * remap(hitter_speed, post_pop_min_speed, post_pop_min_speed * 2, .25, .8)
-	z = 2
+	z = 1
 	_in_air = true
 
 
@@ -192,34 +189,71 @@ func add_flavor(flavor: Flavor):
 
 
 func pop(global_impact_point: Vector2, extra_pops_left: int = 0, iteration: int = 0, recovery_pop: bool = false):
-	var adjusted_z_impulse = z_impulse
-	var adjusted_pop_force = pop_force
-	if recovery_pop:
-		adjusted_z_impulse = adjusted_z_impulse * .3
-		pop_force = pop_force * .5
-	elif has_popped:
-		adjusted_z_impulse = adjusted_z_impulse * .7
-		pop_force = pop_force * .3
+	if iteration > 10 or z >= 1:
+		return
 
-	has_popped = true
-	z_velocity += adjusted_z_impulse * remap(iteration, 0, 4, 1, .2)
-	z = 2
-	$Shadow.show()
-
+	# Swap out texture and colliders from unpopped to popped
 	sprite.texture = popped_sprite
 	popped_collider.disabled = false
 	unpopped_collider.disabled = true
+	$Shadow.show()
+
+	# Move the popcorn on the x/y axix using godot physics
+	var adjusted_pop_force = pop_force
 
 	var direction = global_impact_point.direction_to(global_position) # random = randf_range(0, TAU)
 	var impulse = direction * adjusted_pop_force # random = Vector2(pop_force * cos(direction), pop_force * sin(direction))
 	apply_impulse(impulse)
 
+	# Apply z impulse using our physics 
+	var adjusted_z_impulse = z_impulse
+
+	if recovery_pop:
+		adjusted_z_impulse = adjusted_z_impulse * .3
+		pop_force = pop_force * .5
+
+	z_velocity += adjusted_z_impulse * remap(min(iteration, 4), 0, 4, 1, .3)
+	z = 1
+
+	has_popped = true
+	_in_air = true
+	_is_falling = false
+
+	# Figure out if we should pop other things
 	_iteration = iteration
 	_number_of_pops_left = extra_pops_left
 	if _number_of_pops_left < 0 or extra_pops > 0:
 		_number_of_pops_left = extra_pops
-	_in_air = true
+
+	# Let the everyone know we popped
 	popped.emit(self, global_impact_point, _number_of_pops_left, iteration)
+
+
+func _handle_falling(delta: float):
+	if _has_fallen:
+		return
+
+	# check if we are off the level
+	if z <= floor_z:
+		z = floor_z
+		_is_falling = false
+		_trigger_score()
+		_has_fallen = true
+		hit_floor.emit(self)
+	else:
+		z = max(z - gravity * delta, floor_z)
+
+
+func _trigger_score():
+	if score_label:
+		score_label.show()
+		var s_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		s_tween.tween_property(score_label, "position", sprite.global_position + Vector2(0, -75), .6).from(sprite.global_position)
+		s_tween.parallel().tween_property(score_label, "modulate", Color.TRANSPARENT, 1.6).set_delay(.4)
+		s_tween.tween_callback(func():
+				score_label.queue_free()
+		)
+		s_tween.play()
 
 
 func _on_body_exited(body: Node) -> void:
