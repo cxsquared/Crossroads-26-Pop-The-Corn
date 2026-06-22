@@ -30,7 +30,7 @@ var can_pop = true
 @onready var pops_left_label: Label = $"LevelHud/Pops Left"
 @onready var hud = $LevelHud
 @onready var pointer: Pointer = $Pointer
-
+@onready var click_to_continue :Label = $LevelHud/ClickToContinue
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,6 +41,7 @@ func _ready() -> void:
 
 	spawn_corn(initial_spawn_number, Global.debug)
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	click_to_continue.hide()
 
 
 
@@ -50,6 +51,8 @@ func reset_pops():
 	score_updated.emit(score)
 	target = Global.current_run.get_current_wave_target()
 	player_pops_left = starting_pop_attempts
+	click_to_continue.hide()
+
 	
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
@@ -254,6 +257,10 @@ func _on_pointer_clicked(pointer: Pointer, flavor: FlavorShopData) -> void:
 	if hit_corn:
 		player_pops_left -= 1
 		pops_left_label.text = "%d Pops Left" % player_pops_left
+		
+		if player_pops_left <= 0:
+			click_to_continue.show()
+
 
 
 func _on_popped(popcorn: Popcorn, _global_impact_point: Vector2, _number_of_pops_left: int, _iteration: int):

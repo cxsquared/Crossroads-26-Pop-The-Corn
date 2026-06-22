@@ -145,6 +145,26 @@ theme_override_font_sizes/font_size = 46
 text = "0 left to pop"
 horizontal_alignment = 1
 
+[node name="ClickToContinue" type="Label" parent="LevelHud" unique_id=1127326]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -24.5
+offset_right = 71.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_ygvoh")
+theme_override_font_sizes/font_size = 38
+text = "You're out of pops
+Click to continue"
+horizontal_alignment = 1
+
 [connection signal="score_updated" from="." to="LevelHud/PopInfo" method="_on_level_score_updated"]
 [connection signal="clicked" from="Pointer" to="." method="_on_pointer_clicked"]
 [connection signal="extended" from="LevelHud/FlavorSideBar" to="." method="_on_flavor_side_bar_extended"]

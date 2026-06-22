@@ -21,17 +21,21 @@ func _process(delta: float) -> void:
 
 
 func play_confirm():
+	volume_db = 0
 	stream = confirm_sounds.pick_random()
 	pitch_scale = randf_range(.98, 1.02)
 	play()
 
 
 func play_buy():
+	volume_db = 0
 	stream = cash_sound
 	pitch_scale = randf_range(.98, 1.02)
 	play()
-	
+
+
 func play_slide():
+	volume_db = 0
 	stream = slide_sounds.pick_random()
 	pitch_scale = 1
 	play()
@@ -42,6 +46,7 @@ func play_increase(reset = false):
 		rise_sound = confirm_sounds.pick_random()
 		rise_pitch = 1
 
+	volume_db = -3
 	stream = rise_sound
 	pitch_scale = rise_pitch
 	play()
